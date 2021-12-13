@@ -1,5 +1,5 @@
 import { Resolver, Query, Mutation, Arg } from "type-graphql";
-import { generateToken } from "../utils/token/generate";
+import { generateToken, wrapAccessToken } from "../utils/token";
 import { AuthDefaultResponse } from "../utils/responses/auth";
 
 @Resolver()
@@ -25,10 +25,15 @@ export class UserResolver {
       };
     }
     console.log("access info => ", _access);
+    const _token = wrapAccessToken({
+      token: _access.token.access_token,
+      expire_in: _access.token.expires_in,
+      created_at: _access.token.created_at,
+    });
     return {
       status: true,
       message: "Loggin successfuly !",
-      token: _access.token.access_token,
+      token: _token,
     };
   }
 }

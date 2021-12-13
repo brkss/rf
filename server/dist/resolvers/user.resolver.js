@@ -14,7 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserResolver = void 0;
 const type_graphql_1 = require("type-graphql");
-const generate_1 = require("../utils/token/generate");
+const token_1 = require("../utils/token");
 const auth_1 = require("../utils/responses/auth");
 let UserResolver = class UserResolver {
     ping() {
@@ -27,7 +27,7 @@ let UserResolver = class UserResolver {
                 message: "Invalid Code !",
             };
         }
-        const _access = await (0, generate_1.generateToken)(code);
+        const _access = await (0, token_1.generateToken)(code);
         if (!_access) {
             return {
                 status: false,
@@ -35,10 +35,15 @@ let UserResolver = class UserResolver {
             };
         }
         console.log("access info => ", _access);
+        const _token = (0, token_1.wrapAccessToken)({
+            token: _access.token.access_token,
+            expire_in: _access.token.expires_in,
+            created_at: _access.token.created_at,
+        });
         return {
             status: true,
             message: "Loggin successfuly !",
-            token: _access.token.access_token,
+            token: _token,
         };
     }
 };
