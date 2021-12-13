@@ -1,12 +1,13 @@
 import React from "react";
+import { Spinner, Center, Box } from "@chakra-ui/react";
 import queryString from "query-string";
 import { useHistory } from "react-router-dom";
 
-export const Home: React.FC<any> = (props) => {
+export const Verification: React.FC<any> = (props) => {
   const history = useHistory();
   const parseParams = () => {
     const params = queryString.parse(props.location.search);
-    //if (!params.code) history.push("/login");
+    if (!params.code) history.push("/login");
 
     console.log("code => ", params.code);
   };
@@ -16,8 +17,10 @@ export const Home: React.FC<any> = (props) => {
   }, []);
 
   return (
-    <>
-      <h1>This is Home ! </h1>
-    </>
+    <Box h={"100vh"}>
+      <Center h={"100%"}>
+        <Spinner />
+      </Center>
+    </Box>
   );
 };

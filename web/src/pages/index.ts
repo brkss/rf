@@ -1,2 +1,2 @@
 export { Home } from "./Home";
-export { Login } from "./Auth";
+export { Login, Verification } from "./Auth";

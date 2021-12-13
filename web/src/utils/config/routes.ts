@@ -1,5 +1,5 @@
 import { IRoute } from "../types/Route";
-import { Home, Login } from "../../pages";
+import { Home, Login, Verification } from "../../pages";
 
 export const routes: IRoute[] = [
   {
@@ -13,5 +13,11 @@ export const routes: IRoute[] = [
     path: "/login",
     exact: true,
     component: Login,
+  },
+  {
+    name: "Verification",
+    path: "/verification",
+    exact: true,
+    component: Verification,
   },
 ];
