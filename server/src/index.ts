@@ -2,9 +2,22 @@ import "dotenv/config";
 import "reflect-metadata";
 import express from "express";
 import { AuthorizationCode } from "simple-oauth2";
+import { ApolloServer } from "apollo-server-express";
+import { buildSchema } from "type-graphql";
+import { UserResolver } from "./resolvers";
 
 (async () => {
   const app = express();
+
+  // init apolloServer
+  const apolloServer = new ApolloServer({
+    schema: await buildSchema({
+      resolvers: [UserResolver],
+      validate: false,
+    }),
+  });
+
+  apolloServer.applyMiddleware({ app });
   const config = {
     client: {
       id: process.env.UID!,
@@ -36,7 +49,7 @@ import { AuthorizationCode } from "simple-oauth2";
 const getToken = async (client: any) => {
   let _token = "";
   const tokenParams = {
-    code: "45a107e394be2fbfc7efaf9a4e5db944a7bda9c795c439f626c5828c80dd0c45",
+    code: "80a21e7ce1e11d23917fae0968314047733774d5bbcc5fb977f84e106ad3f7c1",
     redirect_uri: "http://localhost:3000",
     scope: "public",
   };
