@@ -4,6 +4,7 @@ import {
   Route,
   Switch,
   RouteComponentProps,
+  useHistory,
 } from "react-router-dom";
 import { routes } from "./utils/config/routes";
 import { DEFAULT_API_URL } from "./utils/config/constants";
@@ -12,7 +13,6 @@ import { Center, Spinner } from "@chakra-ui/react";
 
 export const Application: React.FC = () => {
   const [loading, setLoading] = React.useState(true);
-
   React.useEffect(() => {
     fetch(`${DEFAULT_API_URL}/refresh_token`, {
       credentials: "include",

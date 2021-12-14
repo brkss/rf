@@ -1,0 +1,9 @@
+
+
+mutation Auth($code: String!){
+  auth(code: $code){
+    status
+    message
+    token
+  }
+}

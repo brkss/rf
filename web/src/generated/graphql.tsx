@@ -37,12 +37,54 @@ export type Query = {
   ping: Scalars['String'];
 };
 
+export type AuthMutationVariables = Exact<{
+  code: Scalars['String'];
+}>;
+
+
+export type AuthMutation = { __typename?: 'Mutation', auth: { __typename?: 'AuthDefaultResponse', status: boolean, message?: string | null | undefined, token?: string | null | undefined } };
+
 export type PingQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type PingQuery = { __typename?: 'Query', ping: string };
 
 
+export const AuthDocument = gql`
+    mutation Auth($code: String!) {
+  auth(code: $code) {
+    status
+    message
+    token
+  }
+}
+    `;
+export type AuthMutationFn = Apollo.MutationFunction<AuthMutation, AuthMutationVariables>;
+
+/**
+ * __useAuthMutation__
+ *
+ * To run a mutation, you first call `useAuthMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAuthMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [authMutation, { data, loading, error }] = useAuthMutation({
+ *   variables: {
+ *      code: // value for 'code'
+ *   },
+ * });
+ */
+export function useAuthMutation(baseOptions?: Apollo.MutationHookOptions<AuthMutation, AuthMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AuthMutation, AuthMutationVariables>(AuthDocument, options);
+      }
+export type AuthMutationHookResult = ReturnType<typeof useAuthMutation>;
+export type AuthMutationResult = Apollo.MutationResult<AuthMutation>;
+export type AuthMutationOptions = Apollo.BaseMutationOptions<AuthMutation, AuthMutationVariables>;
 export const PingDocument = gql`
     query Ping {
   ping
