@@ -1,4 +1,4 @@
-import { AuthorizationCode } from "simple-oauth2";
+import { AuthorizationCode, AuthorizationTokenConfig } from "simple-oauth2";
 
 export const generateToken = async (code: string) => {
   let _token = null;
@@ -13,7 +13,7 @@ export const generateToken = async (code: string) => {
   };
 
   const client = new AuthorizationCode(config);
-  const tokenParams = {
+  const tokenParams: AuthorizationTokenConfig = {
     code: code,
     redirect_uri: "http://localhost:3000",
     scope: "public",

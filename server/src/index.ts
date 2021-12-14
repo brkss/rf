@@ -4,10 +4,13 @@ import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { UserResolver } from "./resolvers";
+import cookieParser from "cookie-parser";
+import { refreshToken } from "./utils/token";
 
 (async () => {
   const app = express();
 
+  app.use(cookieParser());
   // init apolloServer
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
@@ -22,6 +25,8 @@ import { UserResolver } from "./resolvers";
   app.get("/", (_, res) => {
     res.send("hello");
   });
+
+  app.post("/refresh_token", async (req, res) => await refreshToken(req, res));
 
   app.listen(4000, () => {
     console.log("🚀 server runing at http://localhost:4000");
