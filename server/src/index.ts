@@ -6,10 +6,17 @@ import { buildSchema } from "type-graphql";
 import { UserResolver } from "./resolvers";
 import cookieParser from "cookie-parser";
 import { refreshToken } from "./utils/token";
+import cors from "cors";
 
 (async () => {
   const app = express();
 
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+    })
+  );
   app.use(cookieParser());
   // init apolloServer
   const apolloServer = new ApolloServer({
