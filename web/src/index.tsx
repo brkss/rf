@@ -61,7 +61,7 @@ const link: any = new TokenRefreshLink({
     }
   },
   fetchAccessToken: () => {
-    return fetch(`${DEFAULT_API_URL}/refresh_user_token`, {
+    return fetch(`${DEFAULT_API_URL}/refresh_token`, {
       method: "POST",
       credentials: "include",
     });
