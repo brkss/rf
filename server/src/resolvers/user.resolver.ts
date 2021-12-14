@@ -6,6 +6,7 @@ import {
 } from "../utils/token";
 import { AuthDefaultResponse } from "../utils/responses/auth";
 import { IContext } from "../utils/types/Context";
+import axios, { AxiosRequestConfig } from "axios";
 
 @Resolver()
 export class UserResolver {
@@ -50,4 +51,26 @@ export class UserResolver {
       token: _token,
     };
   }
+
+  @Mutation(() => Boolean)
+  async me(@Arg("at") at: string) {
+    userData(at);
+    return true;
+  }
 }
+
+export const userData = async (access_token: string) => {
+  const config: AxiosRequestConfig = {
+    method: "GET",
+    url: "https://api.intra.42.fr/v2/me",
+    headers: { Authorization: `bearer ${access_token}` },
+  };
+
+  try {
+    const res = await axios.request(config);
+    console.log("campus : ", res.data.campus[0].name);
+  } catch (e) {
+    console.log("something went wrong ! ", e);
+    return null;
+  }
+};
