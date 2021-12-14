@@ -27,7 +27,7 @@ import cors from "cors";
     context: ({ req, res }) => ({ req, res }),
   });
 
-  apolloServer.applyMiddleware({ app });
+  apolloServer.applyMiddleware({ app, cors: false });
 
   app.get("/", (_, res) => {
     res.send("hello");

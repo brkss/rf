@@ -4,11 +4,14 @@ import axios, { AxiosRequestConfig } from "axios";
 import { wrapAccessToken, wrapRefreshToken } from "./wrap";
 
 export const refreshToken = async (req: Request, res: Response) => {
-  const _token = req.cookies.ujid;
+  console.log("=======> trying to refresh <======");
+
+  const _token = req.cookies.uid;
   if (!_token) {
     return res.send({
       status: false,
       token: "",
+      message: "Token not found !",
     });
   }
 
@@ -21,6 +24,7 @@ export const refreshToken = async (req: Request, res: Response) => {
     return res.send({
       status: false,
       token: "",
+      message: "Invalid Token",
     });
   }
 
@@ -45,6 +49,7 @@ export const refreshToken = async (req: Request, res: Response) => {
     return res.send({
       status: false,
       token: "",
+      message: "Something went wrong trying to refresh token !",
     });
   }
   const _accessToken = wrapAccessToken({
@@ -62,5 +67,6 @@ export const refreshToken = async (req: Request, res: Response) => {
   return res.send({
     status: true,
     token: _accessToken,
+    message: "token refreshed successfuly !",
   });
 };

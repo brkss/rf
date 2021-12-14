@@ -8,11 +8,13 @@ const jsonwebtoken_1 = require("jsonwebtoken");
 const axios_1 = __importDefault(require("axios"));
 const wrap_1 = require("./wrap");
 const refreshToken = async (req, res) => {
-    const _token = req.cookies.ujid;
+    console.log("=======> trying to refresh <======");
+    const _token = req.cookies.uid;
     if (!_token) {
         return res.send({
             status: false,
             token: "",
+            message: "Token not found !",
         });
     }
     let payload = null;
@@ -24,6 +26,7 @@ const refreshToken = async (req, res) => {
         return res.send({
             status: false,
             token: "",
+            message: "Invalid Token",
         });
     }
     const options = {
@@ -46,6 +49,7 @@ const refreshToken = async (req, res) => {
         return res.send({
             status: false,
             token: "",
+            message: "Something went wrong trying to refresh token !",
         });
     }
     const _accessToken = (0, wrap_1.wrapAccessToken)({
@@ -62,6 +66,7 @@ const refreshToken = async (req, res) => {
     return res.send({
         status: true,
         token: _accessToken,
+        message: "token refreshed successfuly !",
     });
 };
 exports.refreshToken = refreshToken;
