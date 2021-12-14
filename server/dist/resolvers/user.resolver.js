@@ -20,7 +20,7 @@ let UserResolver = class UserResolver {
     ping() {
         return "pong !";
     }
-    async auth(code) {
+    async auth(code, ctx) {
         if (!code) {
             return {
                 status: false,
@@ -40,6 +40,12 @@ let UserResolver = class UserResolver {
             expire_in: _access.token.expires_in,
             created_at: _access.token.created_at,
         });
+        const _refreshToken = (0, token_1.wrapRefreshToken)({
+            token: _access.token.refresh_token,
+        });
+        ctx.res.cookie("uid", _refreshToken, {
+            httpOnly: true,
+        });
         return {
             status: true,
             message: "Loggin successfuly !",
@@ -56,8 +62,9 @@ __decorate([
 __decorate([
     (0, type_graphql_1.Mutation)(() => auth_1.AuthDefaultResponse),
     __param(0, (0, type_graphql_1.Arg)("code")),
+    __param(1, (0, type_graphql_1.Ctx)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "auth", null);
 UserResolver = __decorate([

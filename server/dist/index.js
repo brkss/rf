@@ -16,6 +16,7 @@ const resolvers_1 = require("./resolvers");
             resolvers: [resolvers_1.UserResolver],
             validate: false,
         }),
+        context: ({ req, res }) => ({ req, res }),
     });
     apolloServer.applyMiddleware({ app });
     app.get("/", (_, res) => {

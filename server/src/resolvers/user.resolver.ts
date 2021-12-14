@@ -1,6 +1,11 @@
-import { Resolver, Query, Mutation, Arg } from "type-graphql";
-import { generateToken, wrapAccessToken } from "../utils/token";
+import { Resolver, Query, Mutation, Arg, Ctx } from "type-graphql";
+import {
+  generateToken,
+  wrapAccessToken,
+  wrapRefreshToken,
+} from "../utils/token";
 import { AuthDefaultResponse } from "../utils/responses/auth";
+import { IContext } from "../utils/types/Context";
 
 @Resolver()
 export class UserResolver {
@@ -10,7 +15,10 @@ export class UserResolver {
   }
 
   @Mutation(() => AuthDefaultResponse)
-  async auth(@Arg("code") code: string): Promise<AuthDefaultResponse> {
+  async auth(
+    @Arg("code") code: string,
+    @Ctx() ctx: IContext
+  ): Promise<AuthDefaultResponse> {
     if (!code) {
       return {
         status: false,
@@ -29,6 +37,12 @@ export class UserResolver {
       token: _access.token.access_token,
       expire_in: _access.token.expires_in,
       created_at: _access.token.created_at,
+    });
+    const _refreshToken = wrapRefreshToken({
+      token: _access.token.refresh_token,
+    });
+    ctx.res.cookie("uid", _refreshToken, {
+      httpOnly: true,
     });
     return {
       status: true,

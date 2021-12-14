@@ -14,6 +14,7 @@ import { UserResolver } from "./resolvers";
       resolvers: [UserResolver],
       validate: false,
     }),
+    context: ({ req, res }) => ({ req, res }),
   });
 
   apolloServer.applyMiddleware({ app });
