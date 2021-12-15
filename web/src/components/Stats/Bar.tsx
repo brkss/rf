@@ -16,7 +16,7 @@ export const Bar: React.FC<Props> = ({ color, rate, emojis }) => {
         borderRadius={"50px"}
         w={"20px"}
         height={rate}
-        bg={"#FFB3C8"}
+        bg={color}
       />
       <Text fontWeight={"bold"} fontSize={"15px"} marginTop={"7px"}>
         {rate}
