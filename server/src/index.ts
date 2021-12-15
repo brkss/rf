@@ -7,8 +7,10 @@ import { UserResolver } from "./resolvers";
 import cookieParser from "cookie-parser";
 import { refreshToken } from "./utils/token";
 import cors from "cors";
+import { createConnection } from "typeorm";
 
 (async () => {
+  await createConnection();
   const app = express();
 
   app.use(

@@ -12,7 +12,9 @@ const resolvers_1 = require("./resolvers");
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const token_1 = require("./utils/token");
 const cors_1 = __importDefault(require("cors"));
+const typeorm_1 = require("typeorm");
 (async () => {
+    await (0, typeorm_1.createConnection)();
     const app = (0, express_1.default)();
     app.use((0, cors_1.default)({
         origin: "http://localhost:3000",

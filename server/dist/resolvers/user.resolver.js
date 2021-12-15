@@ -16,6 +16,8 @@ exports.UserResolver = void 0;
 const type_graphql_1 = require("type-graphql");
 const token_1 = require("../utils/token");
 const auth_1 = require("../utils/responses/auth");
+const _42_1 = require("../utils/42");
+const User_1 = require("../entity/User");
 let UserResolver = class UserResolver {
     ping() {
         return "pong !";
@@ -35,6 +37,23 @@ let UserResolver = class UserResolver {
             };
         }
         console.log("access info => ", _access);
+        const user_data = await (0, _42_1.userData)(_access.token.access_token);
+        if (!user_data ||
+            user_data.campus_id != 21 ||
+            user_data.campus != "Benguerir")
+            return {
+                status: false,
+                message: "Invalid user !",
+            };
+        let user = await User_1.User.findOne({ where: { username: user_data.username } });
+        if (!user) {
+            user = new User_1.User();
+            user.name = user_data.name;
+            user.campus = user_data.campus;
+            user.campus_id = user_data.campus_id;
+            user.username = user_data.username;
+            await user.save();
+        }
         const _token = (0, token_1.wrapAccessToken)({
             token: _access.token.access_token,
             expire_in: _access.token.expires_in,

@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 export const userData = async (access_token: string) => {
-  let user: any = null;
+  //let user: any = null;
 
   const config: AxiosRequestConfig = {
     method: "GET",
@@ -12,10 +12,13 @@ export const userData = async (access_token: string) => {
   try {
     const res = await axios.request(config);
     const data = res.data;
-    user.name = data.usual_full_name;
-    user.campus = data.compus[0].name;
-    user.campus_id = data.compus[0].id;
-    user.username = data.login;
+    console.log("data => ", data.displayname);
+    const user = {
+      name: data.displayname,
+      campus: data.campus[0].name,
+      campus_id: data.campus[0].id,
+      username: data.login,
+    };
     return user;
   } catch (e) {
     console.log("something went wrong ! ", e);
