@@ -1,5 +1,5 @@
 import React from "react";
-import { Center, Box, Grid, Text } from "@chakra-ui/react";
+import { Center, Box, Grid, Text, Heading } from "@chakra-ui/react";
 import { Bar } from "../Stats/Bar";
 import { reactions } from "../../utils/data/reactions.data";
 
@@ -11,7 +11,8 @@ export const Bars: React.FC = () => {
   };
 
   return (
-    <Box bg={"gray.50"} pos={"relative"} h={"100vh"}>
+    <Box pt={"20px"} bg={"gray.50"} pos={"relative"} h={"100vh"}>
+      <Heading textAlign={"center"}>Today's dinner </Heading>
       <Center h={"100%"}>
         <Grid
           h={"80%"}
@@ -34,7 +35,7 @@ export const Bars: React.FC = () => {
           bottom={"20%"}
           p={"5px 15px"}
           rounded={"50px"}
-          bg={"#ffffff61"}
+          bg={"#d1ffef"}
           fontWeight={"bold"}
         >
           {getMaxRateExpression() || "!"}

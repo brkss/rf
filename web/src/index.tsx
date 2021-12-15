@@ -13,6 +13,7 @@ import { getAccessToken, setAccessToken } from "./utils/token/token";
 import { TokenRefreshLink } from "apollo-link-token-refresh";
 import jwtDecode from "jwt-decode";
 import { DEFAULT_API_URL } from "./utils/config/constants";
+import "./assets/main.css";
 
 const cache = new InMemoryCache({});
 const requestLink = new ApolloLink(

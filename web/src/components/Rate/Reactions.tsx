@@ -54,6 +54,8 @@ export const Reactions: React.FC = () => {
           bg={"#ffffff61"}
           opacity={preSelect == -1 && selected == -1 ? 0 : 1}
           fontWeight={"bold"}
+          cursor={"pointer"}
+          className={selected != -1 ? "fb-btn" : ""}
         >
           {reactions[preSelect]?.expression ||
             reactions[selected]?.expression ||

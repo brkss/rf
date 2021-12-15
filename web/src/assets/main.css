@@ -1,0 +1,16 @@
+
+
+@keyframes feedbackButtonAnimation {
+  0%   { box-shadow: 0 0 0px 0px #ffffff00; }
+  25%  { box-shadow: 0 0 0px 5px #ffffff82; }
+  50%  { box-shadow: 0 0 0px 8px #ffffff40; }
+  75%  { box-shadow: 0 0 0px 10px #ffffff1f; }
+  100% { box-shadow: 0 0 0px 10px #ffffff03; }
+}
+
+.fb-btn {
+  transition: .3s;
+  animation-name: feedbackButtonAnimation;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
