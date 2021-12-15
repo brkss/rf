@@ -1,19 +1,25 @@
 import React from "react";
 import { Box, Text } from "@chakra-ui/react";
 
-export const Bar: React.FC = () => {
+interface Props {
+  emojis: string;
+  rate: string;
+  color: string;
+}
+
+export const Bar: React.FC<Props> = ({ color, rate, emojis }) => {
   return (
-    <Box textAlign={"center"}>
-      <Text fontSize={"25px"}>😁</Text>
+    <Box h={"100%"} textAlign={"center"}>
+      <Text fontSize={"25px"}>{emojis}</Text>
       <Box
         margin={"auto"}
         borderRadius={"50px"}
         w={"20px"}
-        height={"50px"}
+        height={rate}
         bg={"#FFB3C8"}
       />
       <Text fontWeight={"bold"} fontSize={"15px"} marginTop={"7px"}>
-        68%
+        {rate}
       </Text>
     </Box>
   );
