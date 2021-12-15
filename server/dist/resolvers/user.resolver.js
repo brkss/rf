@@ -11,15 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userData = exports.UserResolver = void 0;
+exports.UserResolver = void 0;
 const type_graphql_1 = require("type-graphql");
 const token_1 = require("../utils/token");
 const auth_1 = require("../utils/responses/auth");
-const axios_1 = __importDefault(require("axios"));
 let UserResolver = class UserResolver {
     ping() {
         return "pong !";
@@ -56,8 +52,7 @@ let UserResolver = class UserResolver {
             token: _token,
         };
     }
-    async me(at) {
-        (0, exports.userData)(at);
+    async me() {
         return true;
     }
 };
@@ -77,29 +72,12 @@ __decorate([
 ], UserResolver.prototype, "auth", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => Boolean),
-    __param(0, (0, type_graphql_1.Arg)("at")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "me", null);
 UserResolver = __decorate([
     (0, type_graphql_1.Resolver)()
 ], UserResolver);
 exports.UserResolver = UserResolver;
-const userData = async (access_token) => {
-    const config = {
-        method: "GET",
-        url: "https://api.intra.42.fr/v2/me",
-        headers: { Authorization: `bearer ${access_token}` },
-    };
-    try {
-        const res = await axios_1.default.request(config);
-        console.log("campus : ", res.data.campus[0].name);
-    }
-    catch (e) {
-        console.log("something went wrong ! ", e);
-        return null;
-    }
-};
-exports.userData = userData;
 //# sourceMappingURL=user.resolver.js.map
