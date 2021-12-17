@@ -18,5 +18,5 @@ export const isUserAuth: MiddlewareFn<IContext> = ({ context }, next) => {
     console.log("token verf error => ", e);
     throw new Error("Something went varifying token !");
   }
-  next();
+  return next();
 };

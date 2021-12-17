@@ -87,9 +87,10 @@ export class UserResolver {
   }
 
   @UseMiddleware(isUserAuth)
-  @Query(() => String)
-  async me(@Ctx() ctx: IContext) {
+  @Query(() => User)
+  async me(@Ctx() ctx: IContext): Promise<User> {
     console.log("payload : ", ctx.payload);
-    return "good";
+    const user = await User.findOne({ where: { id: ctx.payload.usr_id } });
+    return user!;
   }
 }

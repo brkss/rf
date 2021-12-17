@@ -76,7 +76,8 @@ let UserResolver = class UserResolver {
     }
     async me(ctx) {
         console.log("payload : ", ctx.payload);
-        return "good";
+        const user = await User_1.User.findOne({ where: { id: ctx.payload.usr_id } });
+        return user;
     }
 };
 __decorate([
@@ -95,7 +96,7 @@ __decorate([
 ], UserResolver.prototype, "auth", null);
 __decorate([
     (0, type_graphql_1.UseMiddleware)(middlewares_1.isUserAuth),
-    (0, type_graphql_1.Query)(() => String),
+    (0, type_graphql_1.Query)(() => User_1.User),
     __param(0, (0, type_graphql_1.Ctx)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

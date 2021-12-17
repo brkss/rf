@@ -53,7 +53,7 @@ const refreshToken = async (req, res) => {
             message: "Something went wrong trying to refresh token !",
         });
     }
-    const user = await User_1.User.findOne({ where: { id: payload.user_id } });
+    const user = await User_1.User.findOne({ where: { id: payload.usr_id } });
     if (!user) {
         return res.send({
             status: false,

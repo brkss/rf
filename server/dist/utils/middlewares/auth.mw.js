@@ -19,7 +19,7 @@ const isUserAuth = ({ context }, next) => {
         console.log("token verf error => ", e);
         throw new Error("Something went varifying token !");
     }
-    next();
+    return next();
 };
 exports.isUserAuth = isUserAuth;
 //# sourceMappingURL=auth.mw.js.map
