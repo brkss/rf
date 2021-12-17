@@ -1,6 +1,7 @@
-import { Resolver, Query, Mutation } from "type-graphql";
+import { Resolver, Query } from "type-graphql";
 import { Meal } from "../entity/Meal";
 import moment from "moment";
+import { MealTimeResponse } from "../utils/responses/meal/MealTimeResponse";
 
 @Resolver()
 export class MealResolver {
@@ -12,8 +13,8 @@ export class MealResolver {
   // This function is not final
   // BIG MESS !!!
   // this need some real recoding
-  @Query(() => Meal, { nullable: true })
-  async mealTime(): Promise<Meal | null> {
+  @Query(() => MealTimeResponse, { nullable: true })
+  async mealTime(): Promise<MealTimeResponse | null> {
     const now = "11:00:01 pm";
     const _now = moment(now, "hh:mm:ss a");
     const meals = await Meal.find();
@@ -28,7 +29,11 @@ export class MealResolver {
     for (let meal of mealsTime) {
       if (_now.isBetween(meal.start, meal.end)) {
         const m = await Meal.findOne({ where: { id: meal.id } });
-        return m as Meal | null;
+        return {
+          meal: m as Meal,
+          is_current: true,
+          is_tommorow: false,
+        };
       }
     }
     // get closest meal !
@@ -42,7 +47,11 @@ export class MealResolver {
 
     if (target) {
       const m = await Meal.findOne({ where: { id: target.id } });
-      return (m as Meal) || null;
+      return {
+        meal: m as Meal,
+        is_tommorow: false,
+        is_current: false,
+      };
     }
     // get closest meal if we past the last meal !
     for (let meal of mealsTime) {
@@ -55,7 +64,11 @@ export class MealResolver {
     }
 
     const m = await Meal.findOne({ where: { id: target.id } });
-    return (m as Meal) || null;
+    return {
+      meal: m as Meal,
+      is_current: false,
+      is_tommorow: true,
+    };
   }
 }
 

@@ -16,6 +16,7 @@ exports.MealResolver = void 0;
 const type_graphql_1 = require("type-graphql");
 const Meal_1 = require("../entity/Meal");
 const moment_1 = __importDefault(require("moment"));
+const MealTimeResponse_1 = require("../utils/responses/meal/MealTimeResponse");
 let MealResolver = class MealResolver {
     tping() {
         return "tpong !";
@@ -33,7 +34,11 @@ let MealResolver = class MealResolver {
         for (let meal of mealsTime) {
             if (_now.isBetween(meal.start, meal.end)) {
                 const m = await Meal_1.Meal.findOne({ where: { id: meal.id } });
-                return m;
+                return {
+                    meal: m,
+                    is_current: true,
+                    is_tommorow: false,
+                };
             }
         }
         for (let meal of mealsTime) {
@@ -48,7 +53,11 @@ let MealResolver = class MealResolver {
         }
         if (target) {
             const m = await Meal_1.Meal.findOne({ where: { id: target.id } });
-            return m || null;
+            return {
+                meal: m,
+                is_tommorow: false,
+                is_current: false,
+            };
         }
         for (let meal of mealsTime) {
             if (meal.start.add(1, "days").diff(_now) > 0) {
@@ -61,7 +70,11 @@ let MealResolver = class MealResolver {
             }
         }
         const m = await Meal_1.Meal.findOne({ where: { id: target.id } });
-        return m || null;
+        return {
+            meal: m,
+            is_current: false,
+            is_tommorow: true,
+        };
     }
 };
 __decorate([
@@ -71,7 +84,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], MealResolver.prototype, "tping", null);
 __decorate([
-    (0, type_graphql_1.Query)(() => Meal_1.Meal, { nullable: true }),
+    (0, type_graphql_1.Query)(() => MealTimeResponse_1.MealTimeResponse, { nullable: true }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
