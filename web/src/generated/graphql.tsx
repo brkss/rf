@@ -13,6 +13,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+  DateTime: any;
 };
 
 export type AuthDefaultResponse = {
@@ -22,9 +24,19 @@ export type AuthDefaultResponse = {
   token?: Maybe<Scalars['String']>;
 };
 
+export type Meal = {
+  __typename?: 'Meal';
+  created_at: Scalars['DateTime'];
+  end: Scalars['String'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+  start: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   auth: AuthDefaultResponse;
+  me: Scalars['Boolean'];
 };
 
 
@@ -34,8 +46,15 @@ export type MutationAuthArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  mealTime?: Maybe<Meal>;
   ping: Scalars['String'];
+  tping: Scalars['String'];
 };
+
+export type MealTimeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MealTimeQuery = { __typename?: 'Query', mealTime?: { __typename?: 'Meal', id: string, name: string, start: string, end: string } | null | undefined };
 
 export type AuthMutationVariables = Exact<{
   code: Scalars['String'];
@@ -50,6 +69,43 @@ export type PingQueryVariables = Exact<{ [key: string]: never; }>;
 export type PingQuery = { __typename?: 'Query', ping: string };
 
 
+export const MealTimeDocument = gql`
+    query MealTime {
+  mealTime {
+    id
+    name
+    start
+    end
+  }
+}
+    `;
+
+/**
+ * __useMealTimeQuery__
+ *
+ * To run a query within a React component, call `useMealTimeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMealTimeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMealTimeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMealTimeQuery(baseOptions?: Apollo.QueryHookOptions<MealTimeQuery, MealTimeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MealTimeQuery, MealTimeQueryVariables>(MealTimeDocument, options);
+      }
+export function useMealTimeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MealTimeQuery, MealTimeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MealTimeQuery, MealTimeQueryVariables>(MealTimeDocument, options);
+        }
+export type MealTimeQueryHookResult = ReturnType<typeof useMealTimeQuery>;
+export type MealTimeLazyQueryHookResult = ReturnType<typeof useMealTimeLazyQuery>;
+export type MealTimeQueryResult = Apollo.QueryResult<MealTimeQuery, MealTimeQueryVariables>;
 export const AuthDocument = gql`
     mutation Auth($code: String!) {
   auth(code: $code) {

@@ -1,0 +1,9 @@
+
+query MealTime{
+  mealTime {
+    id
+    name
+    start
+    end
+  }
+}
