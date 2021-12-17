@@ -7,23 +7,27 @@ export const routes: IRoute[] = [
     path: "/",
     exact: true,
     component: Home,
+    protected: false,
   },
   {
     name: "Login",
     path: "/login",
     exact: true,
     component: Login,
+    protected: false,
   },
   {
     name: "Verification",
     path: "/verification",
     exact: true,
     component: Verification,
+    protected: false,
   },
   {
     name: "Feedback",
     path: "/feedback",
     exact: true,
     component: FeedBack,
+    protected: true,
   },
 ];
