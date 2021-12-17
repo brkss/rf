@@ -5,8 +5,28 @@ import {
   CircularProgress,
   CircularProgressLabel,
 } from "@chakra-ui/react";
+import CountDown from "react-countdown";
 
 export const Timer: React.FC = () => {
+  const renderer = ({ hours, minutes, seconds, completed }: any) => {
+    if (completed) {
+      // Render a complete state
+      return <p>Ready !</p>;
+    } else {
+      // Render a countdown
+      return (
+        <span>
+          {formatTime(hours)}:{formatTime(minutes)}:{formatTime(seconds)}
+        </span>
+      );
+    }
+  };
+
+  const formatTime = (time: number) => {
+    if (time < 10) return `0${time}`;
+    return time;
+  };
+
   return (
     <Box bg={"gray.100"} h={"100vh"}>
       <Center h={"100%"}>
@@ -21,7 +41,7 @@ export const Timer: React.FC = () => {
             fontWeight={"bold"}
             opacity={0.8}
           >
-            10:34:45
+            <CountDown date={Date.now() + 100000} renderer={renderer} />
           </CircularProgressLabel>
         </CircularProgress>
         {/*
