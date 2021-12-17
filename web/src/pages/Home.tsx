@@ -18,7 +18,7 @@ export const Home: React.FC<any> = (props) => {
         },
         onCompleted: (res) => {
           if (res.auth.status) {
-            history.push("/rate");
+            history.push("/feedback");
           } else {
             console.log("something went wrong ! ");
           }
