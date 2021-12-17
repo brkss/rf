@@ -2,6 +2,7 @@ import React from "react";
 import {
   Center,
   Box,
+  Text,
   CircularProgress,
   CircularProgressLabel,
 } from "@chakra-ui/react";
@@ -9,9 +10,10 @@ import CountDown from "react-countdown";
 
 interface Props {
   time: string;
+  label: string;
 }
 
-export const Timer: React.FC<Props> = ({ time }) => {
+export const Timer: React.FC<Props> = ({ time, label }) => {
   const renderer = ({ hours, minutes, seconds, completed }: any) => {
     console.log("time : ", time);
     if (completed) {
@@ -47,6 +49,7 @@ export const Timer: React.FC<Props> = ({ time }) => {
             opacity={0.8}
           >
             <CountDown date={time} renderer={renderer} />
+            <Text fontSize={"12px"}>{label}</Text>
           </CircularProgressLabel>
         </CircularProgress>
       </Center>

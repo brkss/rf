@@ -7,6 +7,15 @@ import moment from "moment";
 export const FeedBack: React.FC = () => {
   const { data, loading, error } = useMealTimeQuery();
 
+  const checkTime = () => {
+    if (data!.mealTime!.is_tomorrow) {
+      return moment(data!.mealTime!.meal.start, "hh:mm:ss a")
+        .add(1, "days")
+        .toISOString();
+    }
+    return moment(data!.mealTime!.meal.start, "hh:mm:ss a").toISOString();
+  };
+
   if (loading)
     return (
       <Center h={"100vh"}>
@@ -18,9 +27,7 @@ export const FeedBack: React.FC = () => {
       {data!.mealTime!.is_current ? (
         <Reactions />
       ) : (
-        <Timer
-          time={moment(data!.mealTime!.meal.start, "hh:mm:ss a").toISOString()}
-        />
+        <Timer time={checkTime()} label={data!.mealTime!.meal.start} />
       )}
       <Bars />
     </Box>
