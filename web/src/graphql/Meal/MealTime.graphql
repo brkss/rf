@@ -1,9 +1,13 @@
 
 query MealTime{
   mealTime {
-    id
-    name
-    start
-    end
+    is_current
+    is_tomorrow
+    meal {
+      id
+      name
+      start
+      end
+    }
   }
 }
