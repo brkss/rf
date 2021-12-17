@@ -10,6 +10,7 @@ import { routes } from "./utils/config/routes";
 import { DEFAULT_API_URL } from "./utils/config/constants";
 import { getAccessToken, setAccessToken } from "./utils/token/token";
 import { Center, Spinner } from "@chakra-ui/react";
+import { GuardRoute } from "./components";
 
 export const Application: React.FC = () => {
   const [loading, setLoading] = React.useState(true);
@@ -40,16 +41,24 @@ export const Application: React.FC = () => {
     <>
       <BrowserRouter>
         <Switch>
-          {routes.map((route, key) => (
-            <Route
-              path={route.path}
-              key={key}
-              exact={route.exact}
-              render={(props: RouteComponentProps) => (
-                <route.component {...route.name} {...route.props} {...props} />
-              )}
-            />
-          ))}
+          {routes.map((route, key) =>
+            route.protected ? (
+              <GuardRoute route={route} key={key} />
+            ) : (
+              <Route
+                path={route.path}
+                key={key}
+                exact={route.exact}
+                render={(props: RouteComponentProps) => (
+                  <route.component
+                    {...route.name}
+                    {...route.props}
+                    {...props}
+                  />
+                )}
+              />
+            )
+          )}
         </Switch>
       </BrowserRouter>
     </>
