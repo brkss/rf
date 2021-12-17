@@ -2,11 +2,12 @@ import React from "react";
 import { Box, Center, Spinner } from "@chakra-ui/react";
 import { Reactions, Bars, Timer } from "../components";
 import { useMealTimeQuery } from "../generated/graphql";
+import moment from "moment";
 
 export const FeedBack: React.FC = () => {
-  const _mealTime = useMealTimeQuery();
+  const { data, loading, error } = useMealTimeQuery();
 
-  if (_mealTime.loading)
+  if (loading)
     return (
       <Center h={"100vh"}>
         <Spinner />
@@ -14,7 +15,13 @@ export const FeedBack: React.FC = () => {
     );
   return (
     <Box>
-      {_mealTime.data!.mealTime!.is_current ? <Reactions /> : <Timer />}
+      {data!.mealTime!.is_current ? (
+        <Reactions />
+      ) : (
+        <Timer
+          time={moment(data!.mealTime!.meal.start, "hh:mm:ss a").toISOString()}
+        />
+      )}
       <Bars />
     </Box>
   );
