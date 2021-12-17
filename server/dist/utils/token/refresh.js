@@ -7,6 +7,7 @@ exports.refreshToken = void 0;
 const jsonwebtoken_1 = require("jsonwebtoken");
 const axios_1 = __importDefault(require("axios"));
 const wrap_1 = require("./wrap");
+const User_1 = require("../../entity/User");
 const refreshToken = async (req, res) => {
     console.log("=======> trying to refresh <======");
     const _token = req.cookies.uid;
@@ -19,7 +20,7 @@ const refreshToken = async (req, res) => {
     }
     let payload = null;
     try {
-        payload = jsonwebtoken_1.verify(_token, process.env.JWT_REFRESH);
+        payload = (0, jsonwebtoken_1.verify)(_token, process.env.JWT_REFRESH);
     }
     catch (e) {
         console.log("token invalid ! =>", e);
@@ -52,13 +53,22 @@ const refreshToken = async (req, res) => {
             message: "Something went wrong trying to refresh token !",
         });
     }
-    const _accessToken = wrap_1.wrapAccessToken({
+    const user = await User_1.User.findOne({ where: { id: payload.user_id } });
+    if (!user) {
+        return res.send({
+            status: false,
+            message: "User not found !",
+        });
+    }
+    const _accessToken = (0, wrap_1.wrapAccessToken)({
         token: _access.access_token,
         expire_in: _access.expires_in,
         created_at: _access.created_at,
+        usr_id: user.id,
     });
-    const _refreshToken = wrap_1.wrapRefreshToken({
+    const _refreshToken = (0, wrap_1.wrapRefreshToken)({
         token: _access.refresh_token,
+        usr_id: user.id,
     });
     res.cookie("uid", _refreshToken, {
         httpOnly: true,

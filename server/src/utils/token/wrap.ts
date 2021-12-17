@@ -4,9 +4,11 @@ interface IWrapAcessPayload {
   token: string;
   expire_in: number;
   created_at: number;
+  usr_id: string;
 }
 interface IWrapRefreshPayload {
   token: string;
+  usr_id: string;
 }
 
 export const wrapAccessToken = (payload: IWrapAcessPayload) => {

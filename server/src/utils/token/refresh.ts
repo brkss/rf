@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 import axios, { AxiosRequestConfig } from "axios";
 import { wrapAccessToken, wrapRefreshToken } from "./wrap";
+import { User } from "../../entity/User";
 
 export const refreshToken = async (req: Request, res: Response) => {
   console.log("=======> trying to refresh <======");
@@ -52,13 +53,22 @@ export const refreshToken = async (req: Request, res: Response) => {
       message: "Something went wrong trying to refresh token !",
     });
   }
+  const user = await User.findOne({ where: { id: payload.user_id } });
+  if (!user) {
+    return res.send({
+      status: false,
+      message: "User not found !",
+    });
+  }
   const _accessToken = wrapAccessToken({
     token: _access.access_token,
     expire_in: _access.expires_in,
     created_at: _access.created_at,
+    usr_id: user.id,
   });
   const _refreshToken = wrapRefreshToken({
     token: _access.refresh_token,
+    usr_id: user.id,
   });
   res.cookie("uid", _refreshToken, {
     httpOnly: true,

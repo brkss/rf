@@ -1,4 +1,11 @@
-import { Resolver, Query, Mutation, Arg, Ctx } from "type-graphql";
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Arg,
+  Ctx,
+  UseMiddleware,
+} from "type-graphql";
 import {
   generateToken,
   wrapAccessToken,
@@ -8,6 +15,7 @@ import { AuthDefaultResponse } from "../utils/responses/auth";
 import { IContext } from "../utils/types/Context";
 import { userData } from "../utils/42";
 import { User } from "../entity/User";
+import { isUserAuth } from "../utils/middlewares";
 
 @Resolver()
 export class UserResolver {
@@ -62,9 +70,11 @@ export class UserResolver {
       token: _access.token.access_token,
       expire_in: _access.token.expires_in,
       created_at: _access.token.created_at,
+      usr_id: user.id,
     });
     const _refreshToken = wrapRefreshToken({
       token: _access.token.refresh_token,
+      usr_id: user.id,
     });
     ctx.res.cookie("uid", _refreshToken, {
       httpOnly: true,
@@ -76,8 +86,10 @@ export class UserResolver {
     };
   }
 
-  @Mutation(() => Boolean)
-  async me() {
-    return true;
+  @UseMiddleware(isUserAuth)
+  @Query(() => String)
+  async me(@Ctx() ctx: IContext) {
+    console.log("payload : ", ctx.payload);
+    return "good";
   }
 }
