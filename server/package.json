@@ -23,6 +23,7 @@
     "graphql": "15.3.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
+    "moment-timezone": "^0.5.34",
     "my": "^0.3.3",
     "mysql": "^2.14.1",
     "reflect-metadata": "^0.1.10",

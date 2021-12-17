@@ -22,7 +22,9 @@ let MealResolver = class MealResolver {
         return "tpong !";
     }
     async mealTime() {
-        const now = "11:00:01 pm";
+        const now = new Date().toLocaleTimeString("en-EN", {
+            timeZone: "Africa/Casablanca",
+        });
         const _now = (0, moment_1.default)(now, "hh:mm:ss a");
         const meals = await Meal_1.Meal.find();
         const mealsTime = meals.map((meal) => ({

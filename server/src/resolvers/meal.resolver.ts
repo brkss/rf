@@ -15,7 +15,9 @@ export class MealResolver {
   // this need some real recoding
   @Query(() => MealTimeResponse, { nullable: true })
   async mealTime(): Promise<MealTimeResponse | null> {
-    const now = "11:00:01 pm";
+    const now = new Date().toLocaleTimeString("en-EN", {
+      timeZone: "Africa/Casablanca",
+    });
     const _now = moment(now, "hh:mm:ss a");
     const meals = await Meal.find();
     const mealsTime = meals.map((meal) => ({
