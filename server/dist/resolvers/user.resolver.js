@@ -29,7 +29,7 @@ let UserResolver = class UserResolver {
                 message: "Invalid Code !",
             };
         }
-        const _access = await (0, token_1.generateToken)(code);
+        const _access = await token_1.generateToken(code);
         if (!_access) {
             return {
                 status: false,
@@ -37,7 +37,7 @@ let UserResolver = class UserResolver {
             };
         }
         console.log("access info => ", _access);
-        const user_data = await (0, _42_1.userData)(_access.token.access_token);
+        const user_data = await _42_1.userData(_access.token.access_token);
         if (!user_data ||
             user_data.campus_id != 21 ||
             user_data.campus != "Benguerir")
@@ -54,12 +54,12 @@ let UserResolver = class UserResolver {
             user.username = user_data.username;
             await user.save();
         }
-        const _token = (0, token_1.wrapAccessToken)({
+        const _token = token_1.wrapAccessToken({
             token: _access.token.access_token,
             expire_in: _access.token.expires_in,
             created_at: _access.token.created_at,
         });
-        const _refreshToken = (0, token_1.wrapRefreshToken)({
+        const _refreshToken = token_1.wrapRefreshToken({
             token: _access.token.refresh_token,
         });
         ctx.res.cookie("uid", _refreshToken, {
@@ -76,27 +76,27 @@ let UserResolver = class UserResolver {
     }
 };
 __decorate([
-    (0, type_graphql_1.Query)(() => String),
+    type_graphql_1.Query(() => String),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], UserResolver.prototype, "ping", null);
 __decorate([
-    (0, type_graphql_1.Mutation)(() => auth_1.AuthDefaultResponse),
-    __param(0, (0, type_graphql_1.Arg)("code")),
-    __param(1, (0, type_graphql_1.Ctx)()),
+    type_graphql_1.Mutation(() => auth_1.AuthDefaultResponse),
+    __param(0, type_graphql_1.Arg("code")),
+    __param(1, type_graphql_1.Ctx()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "auth", null);
 __decorate([
-    (0, type_graphql_1.Mutation)(() => Boolean),
+    type_graphql_1.Mutation(() => Boolean),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "me", null);
 UserResolver = __decorate([
-    (0, type_graphql_1.Resolver)()
+    type_graphql_1.Resolver()
 ], UserResolver);
 exports.UserResolver = UserResolver;
 //# sourceMappingURL=user.resolver.js.map

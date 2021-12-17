@@ -23,7 +23,7 @@ const typeorm_1 = require("typeorm");
     app.use((0, cookie_parser_1.default)());
     const apolloServer = new apollo_server_express_1.ApolloServer({
         schema: await (0, type_graphql_1.buildSchema)({
-            resolvers: [resolvers_1.UserResolver],
+            resolvers: [resolvers_1.UserResolver, resolvers_1.MealResolver],
             validate: false,
         }),
         context: ({ req, res }) => ({ req, res }),

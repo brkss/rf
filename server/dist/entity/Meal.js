@@ -9,24 +9,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthDefaultResponse = void 0;
+exports.Meal = void 0;
+const typeorm_1 = require("typeorm");
 const type_graphql_1 = require("type-graphql");
-let AuthDefaultResponse = class AuthDefaultResponse {
+let Meal = class Meal extends typeorm_1.BaseEntity {
 };
 __decorate([
-    type_graphql_1.Field(),
-    __metadata("design:type", Boolean)
-], AuthDefaultResponse.prototype, "status", void 0);
-__decorate([
-    type_graphql_1.Field({ nullable: true }),
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.PrimaryGeneratedColumn)("uuid"),
     __metadata("design:type", String)
-], AuthDefaultResponse.prototype, "message", void 0);
+], Meal.prototype, "id", void 0);
 __decorate([
-    type_graphql_1.Field({ nullable: true }),
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], AuthDefaultResponse.prototype, "token", void 0);
-AuthDefaultResponse = __decorate([
-    type_graphql_1.ObjectType()
-], AuthDefaultResponse);
-exports.AuthDefaultResponse = AuthDefaultResponse;
-//# sourceMappingURL=default.response.js.map
+], Meal.prototype, "name", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Meal.prototype, "start", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Meal.prototype, "end", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.CreateDateColumn)(),
+    __metadata("design:type", Date)
+], Meal.prototype, "created_at", void 0);
+Meal = __decorate([
+    (0, type_graphql_1.ObjectType)(),
+    (0, typeorm_1.Entity)("meals")
+], Meal);
+exports.Meal = Meal;
+//# sourceMappingURL=Meal.js.map

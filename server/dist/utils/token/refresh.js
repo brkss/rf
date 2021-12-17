@@ -19,7 +19,7 @@ const refreshToken = async (req, res) => {
     }
     let payload = null;
     try {
-        payload = (0, jsonwebtoken_1.verify)(_token, process.env.JWT_REFRESH);
+        payload = jsonwebtoken_1.verify(_token, process.env.JWT_REFRESH);
     }
     catch (e) {
         console.log("token invalid ! =>", e);
@@ -52,12 +52,12 @@ const refreshToken = async (req, res) => {
             message: "Something went wrong trying to refresh token !",
         });
     }
-    const _accessToken = (0, wrap_1.wrapAccessToken)({
+    const _accessToken = wrap_1.wrapAccessToken({
         token: _access.access_token,
         expire_in: _access.expires_in,
         created_at: _access.created_at,
     });
-    const _refreshToken = (0, wrap_1.wrapRefreshToken)({
+    const _refreshToken = wrap_1.wrapRefreshToken({
         token: _access.refresh_token,
     });
     res.cookie("uid", _refreshToken, {
