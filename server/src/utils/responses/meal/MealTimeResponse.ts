@@ -7,7 +7,7 @@ export class MealTimeResponse {
   is_current: boolean;
 
   @Field()
-  is_tommorow: boolean;
+  is_tomorrow: boolean;
 
   @Field(() => Meal)
   meal: Meal;

@@ -37,7 +37,7 @@ let MealResolver = class MealResolver {
                 return {
                     meal: m,
                     is_current: true,
-                    is_tommorow: false,
+                    is_tomorrow: false,
                 };
             }
         }
@@ -55,7 +55,7 @@ let MealResolver = class MealResolver {
             const m = await Meal_1.Meal.findOne({ where: { id: target.id } });
             return {
                 meal: m,
-                is_tommorow: false,
+                is_tomorrow: false,
                 is_current: false,
             };
         }
@@ -73,7 +73,7 @@ let MealResolver = class MealResolver {
         return {
             meal: m,
             is_current: false,
-            is_tommorow: true,
+            is_tomorrow: true,
         };
     }
 };

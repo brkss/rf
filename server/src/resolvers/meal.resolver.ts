@@ -32,7 +32,7 @@ export class MealResolver {
         return {
           meal: m as Meal,
           is_current: true,
-          is_tommorow: false,
+          is_tomorrow: false,
         };
       }
     }
@@ -49,7 +49,7 @@ export class MealResolver {
       const m = await Meal.findOne({ where: { id: target.id } });
       return {
         meal: m as Meal,
-        is_tommorow: false,
+        is_tomorrow: false,
         is_current: false,
       };
     }
@@ -67,7 +67,7 @@ export class MealResolver {
     return {
       meal: m as Meal,
       is_current: false,
-      is_tommorow: true,
+      is_tomorrow: true,
     };
   }
 }

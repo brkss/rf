@@ -21,7 +21,7 @@ __decorate([
 __decorate([
     (0, type_graphql_1.Field)(),
     __metadata("design:type", Boolean)
-], MealTimeResponse.prototype, "is_tommorow", void 0);
+], MealTimeResponse.prototype, "is_tomorrow", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => Meal_1.Meal),
     __metadata("design:type", Meal_1.Meal)
