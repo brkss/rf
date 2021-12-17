@@ -27,7 +27,11 @@ export const FeedBack: React.FC = () => {
       {data!.mealTime!.is_current ? (
         <Reactions />
       ) : (
-        <Timer time={checkTime()} label={data!.mealTime!.meal.start} />
+        <Timer
+          time={checkTime()}
+          label={data!.mealTime!.meal.start}
+          meal={data!.mealTime!.meal.name}
+        />
       )}
       <Bars />
     </Box>

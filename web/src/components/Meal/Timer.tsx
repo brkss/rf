@@ -2,6 +2,7 @@ import React from "react";
 import {
   Center,
   Box,
+  Heading,
   Text,
   CircularProgress,
   CircularProgressLabel,
@@ -11,9 +12,10 @@ import CountDown from "react-countdown";
 interface Props {
   time: string;
   label: string;
+  meal: string;
 }
 
-export const Timer: React.FC<Props> = ({ time, label }) => {
+export const Timer: React.FC<Props> = ({ time, label, meal }) => {
   const renderer = ({ hours, minutes, seconds, completed }: any) => {
     console.log("time : ", time);
     if (completed) {
@@ -37,6 +39,9 @@ export const Timer: React.FC<Props> = ({ time, label }) => {
   return (
     <Box bg={"gray.100"} h={"100vh"}>
       <Center h={"100%"}>
+        <Heading pos={"absolute"} fontSize={"16px"} top={"10%"}>
+          {meal} will be in
+        </Heading>
         <CircularProgress
           size={"2xs"}
           thickness={"5px"}
