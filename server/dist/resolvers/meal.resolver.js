@@ -22,7 +22,7 @@ let MealResolver = class MealResolver {
         return "tpong !";
     }
     async mealTime() {
-        const now = new Date().toLocaleTimeString("en-EN", {
+        let now = new Date().toLocaleTimeString("en-EN", {
             timeZone: "Africa/Casablanca",
         });
         const _now = (0, moment_1.default)(now, "hh:mm:ss a");
