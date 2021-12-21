@@ -11,6 +11,7 @@ import { DEFAULT_API_URL } from "./utils/config/constants";
 import { getAccessToken, setAccessToken } from "./utils/token/token";
 import { Center, Spinner } from "@chakra-ui/react";
 import { GuardRoute } from "./components";
+import { Nav } from "./components";
 
 export const Application: React.FC = () => {
   const [loading, setLoading] = React.useState(true);
@@ -40,6 +41,7 @@ export const Application: React.FC = () => {
   return (
     <>
       <BrowserRouter>
+        {getAccessToken() ? <Nav /> : null}
         <Switch>
           {routes.map((route, key) =>
             route.protected ? (
