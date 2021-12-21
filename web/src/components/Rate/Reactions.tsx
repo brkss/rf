@@ -2,7 +2,11 @@ import React from "react";
 import { Center, Box, Heading, Grid, Text } from "@chakra-ui/react";
 import { reactions } from "../../utils/data/reactions.data";
 
-export const Reactions: React.FC = () => {
+interface Props {
+  meal: string;
+}
+
+export const Reactions: React.FC<Props> = ({ meal }) => {
   const [selected, SetSelected] = React.useState(-1);
   const [preSelect, SetPreSelect] = React.useState(-1);
 
@@ -23,6 +27,17 @@ export const Reactions: React.FC = () => {
           templateColumns="repeat(5, 1fr)"
           gap={6}
         >
+          <Heading
+            fontSize={"23px"}
+            left={0}
+            width={"100%"}
+            textAlign={"center"}
+            pos={"absolute"}
+            top={"10%"}
+          >
+            {" "}
+            How Was You {meal} ?
+          </Heading>
           {reactions.map((rec, key) => (
             <Box
               w="100%"

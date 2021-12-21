@@ -2,6 +2,7 @@ import React from "react";
 import queryString from "query-string";
 import { useHistory } from "react-router-dom";
 import { usePingQuery, useAuthMutation } from "../generated/graphql";
+import { getAccessToken } from "../utils/token/token";
 
 export const Home: React.FC<any> = (props) => {
   const history = useHistory();
@@ -10,7 +11,8 @@ export const Home: React.FC<any> = (props) => {
 
   const parseParams = () => {
     const params = queryString.parse(props.location.search);
-    //if (!params.code) history.push("/login");
+    if (getAccessToken()) history.push("/feedback");
+    if (!params.code) history.push("/login");
     if (params.code) {
       auth({
         variables: {

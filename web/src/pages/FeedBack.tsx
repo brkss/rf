@@ -25,7 +25,7 @@ export const FeedBack: React.FC = () => {
   return (
     <Box>
       {data!.mealTime!.is_current ? (
-        <Reactions />
+        <Reactions meal={data!.mealTime!.meal.name} />
       ) : (
         <Timer
           time={checkTime()}

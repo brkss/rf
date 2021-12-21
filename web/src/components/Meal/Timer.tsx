@@ -39,8 +39,13 @@ export const Timer: React.FC<Props> = ({ time, label, meal }) => {
   return (
     <Box bg={"gray.100"} h={"100vh"}>
       <Center h={"100%"}>
-        <Heading pos={"absolute"} fontSize={"16px"} top={"10%"}>
-          {meal} will be in
+        <Heading
+          textTransform="uppercase"
+          pos={"absolute"}
+          fontSize={"16px"}
+          top={"10%"}
+        >
+          🥗 {meal} will be in
         </Heading>
         <CircularProgress
           size={"2xs"}

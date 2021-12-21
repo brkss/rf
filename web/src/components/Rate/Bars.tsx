@@ -12,8 +12,10 @@ export const Bars: React.FC = () => {
 
   return (
     <Box pt={"20px"} bg={"gray.50"} pos={"relative"} h={"100vh"}>
-      <Heading textAlign={"center"}>Today's dinner </Heading>
       <Center h={"100%"}>
+        <Heading pos={"absolute"} top={"2%"} textAlign={"center"}>
+          Today's dinner{" "}
+        </Heading>
         <Grid
           h={"80%"}
           w={{ base: "90%", md: "600px" }}
