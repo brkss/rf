@@ -13,14 +13,15 @@ interface Props {
   time: string;
   label: string;
   meal: string;
+  reload: () => void;
 }
 
-export const Timer: React.FC<Props> = ({ time, label, meal }) => {
+export const Timer: React.FC<Props> = ({ time, label, meal, reload }) => {
   const renderer = ({ hours, minutes, seconds, completed }: any) => {
     console.log("time : ", time);
     if (completed) {
       // Render a complete state
-      return <p>Ready !</p>;
+      reload();
     } else {
       // Render a countdown
       return (

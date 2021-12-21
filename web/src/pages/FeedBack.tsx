@@ -5,7 +5,7 @@ import { useMealTimeQuery } from "../generated/graphql";
 import moment from "moment";
 
 export const FeedBack: React.FC = () => {
-  const { data, loading, error } = useMealTimeQuery();
+  const { data, loading, error, refetch } = useMealTimeQuery();
 
   const checkTime = () => {
     if (data!.mealTime!.is_tomorrow) {
@@ -31,6 +31,7 @@ export const FeedBack: React.FC = () => {
           time={checkTime()}
           label={data!.mealTime!.meal.start}
           meal={data!.mealTime!.meal.name}
+          reload={() => refetch()}
         />
       )}
       <Bars />
