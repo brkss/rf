@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Meal = void 0;
 const typeorm_1 = require("typeorm");
 const type_graphql_1 = require("type-graphql");
+const OpenMeal_1 = require("./OpenMeal");
 let Meal = class Meal extends typeorm_1.BaseEntity {
 };
 __decorate([
@@ -39,6 +40,10 @@ __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], Meal.prototype, "created_at", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => OpenMeal_1.OpenMeal, (openmeals) => openmeals.meal),
+    __metadata("design:type", Array)
+], Meal.prototype, "openMeals", void 0);
 Meal = __decorate([
     (0, type_graphql_1.ObjectType)(),
     (0, typeorm_1.Entity)("meals")

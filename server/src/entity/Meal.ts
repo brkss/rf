@@ -4,8 +4,10 @@ import {
   Column,
   CreateDateColumn,
   PrimaryGeneratedColumn,
+  OneToMany,
 } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
+import { OpenMeal } from "./OpenMeal";
 
 @ObjectType()
 @Entity("meals")
@@ -29,4 +31,7 @@ export class Meal extends BaseEntity {
   @Field()
   @CreateDateColumn()
   created_at: Date;
+
+  @OneToMany(() => OpenMeal, (openmeals) => openmeals.meal)
+  openMeals: OpenMeal[];
 }
