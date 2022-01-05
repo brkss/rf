@@ -22,6 +22,11 @@ __decorate([
     __metadata("design:type", String)
 ], Rate.prototype, "id", void 0);
 __decorate([
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Rate.prototype, "expression", void 0);
+__decorate([
     (0, type_graphql_1.Field)(() => User_1.User),
     (0, typeorm_1.ManyToOne)(() => User_1.User, (user) => user.rates, {
         onDelete: "CASCADE",

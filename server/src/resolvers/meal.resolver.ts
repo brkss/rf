@@ -12,13 +12,13 @@ export class MealResolver {
 
   // This function is not final
   // BIG MESS !!!
-  // this need some real recoding
+  // this need recoding agent
   @Query(() => MealTimeResponse, { nullable: true })
   async mealTime(): Promise<MealTimeResponse | null> {
     let now = new Date().toLocaleTimeString("en-EN", {
       timeZone: "Africa/Casablanca",
     });
-    now = "12:30:00 pm";
+    //now = "12:30:00 pm";
     //now = "1:00:00 am";
     const _now = moment(now, "hh:mm:ss a");
     const meals = await Meal.find();

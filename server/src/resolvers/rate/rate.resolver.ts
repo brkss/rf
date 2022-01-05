@@ -1,17 +1,28 @@
 import { isUserAuth } from "../../utils/middlewares";
-import { Resolver, Ctx, Mutation, UseMiddleware } from "type-graphql";
+import { Resolver, Ctx, Mutation, UseMiddleware, Arg } from "type-graphql";
 import { RateMealResponse } from "../../utils/responses/meal/RateMealResponse";
 import { IContext } from "../../utils/types/Context";
-import { User, Meal, OpenMeal } from "../../entity";
+import { User, Meal, Rate } from "../../entity";
 import moment from "moment";
 import { MealResolver } from "../meal.resolver";
+import { Between } from "typeorm";
+import { RateType } from "../../utils/types/Rate";
 
 @Resolver()
 export class RateMealResolver {
   @UseMiddleware(isUserAuth)
   @Mutation(() => RateMealResponse)
-  async rate(@Ctx() ctx: IContext): Promise<RateMealResponse> {
+  async rate(
+    @Arg("expression") expression: RateType,
+    @Ctx() ctx: IContext
+  ): Promise<RateMealResponse> {
     //return "damn right !!";
+    if (!expression) {
+      return {
+        status: false,
+        message: "Invalid data !",
+      };
+    }
     const user = await User.findOne({ where: { id: ctx.payload.usr_id } });
     if (!user) {
       return {
@@ -29,13 +40,33 @@ export class RateMealResolver {
         message: "Not meal time !",
       };
     }
-    // check if meal already exist
-    //const openmeal = await OpenMeal.find({where: {meal: mealTime.meal, }})
-    //console.log("meal time => ", mealTime);
+    // check if user already rated this meal !
+    const mealStart = moment(mealTime.meal.start, "hh:mm:ss a");
+    const mealEnd = moment(mealTime.meal.end, "hh:mm:ss a");
+    const rateRecord = await Rate.find({
+      where: {
+        user: user,
+        meal: mealTime.meal,
+        created_at: Between(mealStart.toDate(), mealEnd.toDate()),
+      },
+    });
+    console.log("rates => ", rateRecord);
+    if (rateRecord.length > 0) {
+      return {
+        status: false,
+        message: "You already rated on this meal !",
+      };
+    }
+
+    const rate = new Rate();
+    rate.meal = mealTime.meal;
+    rate.user = user;
+    rate.expression = expression;
+    await rate.save();
 
     return {
       status: true,
-      message: `USER ID : ${ctx.payload.usr_id}`,
+      message: "Thank you for rating !",
     };
   }
 }

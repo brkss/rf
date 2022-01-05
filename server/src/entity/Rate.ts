@@ -17,6 +17,10 @@ export class Rate extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
+  @Field()
+  @Column()
+  expression: string;
+
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.rates, {
     onDelete: "CASCADE",
