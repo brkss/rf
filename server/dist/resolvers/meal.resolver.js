@@ -25,6 +25,7 @@ let MealResolver = class MealResolver {
         let now = new Date().toLocaleTimeString("en-EN", {
             timeZone: "Africa/Casablanca",
         });
+        now = "12:30:00 pm";
         const _now = (0, moment_1.default)(now, "hh:mm:ss a");
         const meals = await Meal_1.Meal.find();
         const mealsTime = meals.map((meal) => ({

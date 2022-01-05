@@ -9,24 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthDefaultResponse = void 0;
+exports.RateMealResponse = void 0;
 const type_graphql_1 = require("type-graphql");
-let AuthDefaultResponse = class AuthDefaultResponse {
+let RateMealResponse = class RateMealResponse {
 };
 __decorate([
     (0, type_graphql_1.Field)(),
     __metadata("design:type", Boolean)
-], AuthDefaultResponse.prototype, "status", void 0);
+], RateMealResponse.prototype, "status", void 0);
 __decorate([
     (0, type_graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
-], AuthDefaultResponse.prototype, "message", void 0);
-__decorate([
-    (0, type_graphql_1.Field)({ nullable: true }),
-    __metadata("design:type", String)
-], AuthDefaultResponse.prototype, "token", void 0);
-AuthDefaultResponse = __decorate([
+], RateMealResponse.prototype, "message", void 0);
+RateMealResponse = __decorate([
     (0, type_graphql_1.ObjectType)()
-], AuthDefaultResponse);
-exports.AuthDefaultResponse = AuthDefaultResponse;
-//# sourceMappingURL=default.response.js.map
+], RateMealResponse);
+exports.RateMealResponse = RateMealResponse;
+//# sourceMappingURL=RateMealResponse.js.map

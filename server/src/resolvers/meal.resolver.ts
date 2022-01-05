@@ -18,6 +18,7 @@ export class MealResolver {
     let now = new Date().toLocaleTimeString("en-EN", {
       timeZone: "Africa/Casablanca",
     });
+    now = "12:30:00 pm";
     //now = "1:00:00 am";
     const _now = moment(now, "hh:mm:ss a");
     const meals = await Meal.find();

@@ -9,24 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthDefaultResponse = void 0;
+exports.RateMealResolver = void 0;
+const middlewares_1 = require("../../utils/middlewares");
 const type_graphql_1 = require("type-graphql");
-let AuthDefaultResponse = class AuthDefaultResponse {
+const RateMealResponse_1 = require("../../utils/responses/meal/RateMealResponse");
+let RateMealResolver = class RateMealResolver {
+    rate() {
+    }
 };
 __decorate([
-    (0, type_graphql_1.Field)(),
-    __metadata("design:type", Boolean)
-], AuthDefaultResponse.prototype, "status", void 0);
-__decorate([
-    (0, type_graphql_1.Field)({ nullable: true }),
-    __metadata("design:type", String)
-], AuthDefaultResponse.prototype, "message", void 0);
-__decorate([
-    (0, type_graphql_1.Field)({ nullable: true }),
-    __metadata("design:type", String)
-], AuthDefaultResponse.prototype, "token", void 0);
-AuthDefaultResponse = __decorate([
-    (0, type_graphql_1.ObjectType)()
-], AuthDefaultResponse);
-exports.AuthDefaultResponse = AuthDefaultResponse;
-//# sourceMappingURL=default.response.js.map
+    (0, type_graphql_1.UseMiddleware)(middlewares_1.isUserAuth),
+    (0, type_graphql_1.Mutation)(() => RateMealResponse_1.RateMealResponse),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], RateMealResolver.prototype, "rate", null);
+RateMealResolver = __decorate([
+    (0, type_graphql_1.Resolver)()
+], RateMealResolver);
+exports.RateMealResolver = RateMealResolver;
+//# sourceMappingURL=rate.resolver.js.map

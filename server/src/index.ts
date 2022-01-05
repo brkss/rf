@@ -3,7 +3,7 @@ import "reflect-metadata";
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
-import { UserResolver, MealResolver } from "./resolvers";
+import { UserResolver, MealResolver, RateMealResolver } from "./resolvers";
 import cookieParser from "cookie-parser";
 import { refreshToken } from "./utils/token";
 import cors from "cors";
@@ -23,7 +23,7 @@ import { createConnection } from "typeorm";
   // init apolloServer
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [UserResolver, MealResolver],
+      resolvers: [UserResolver, MealResolver, RateMealResolver],
       validate: false,
     }),
     context: ({ req, res }) => ({ req, res }),
