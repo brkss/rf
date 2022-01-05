@@ -4,8 +4,10 @@ import {
   Column,
   CreateDateColumn,
   BaseEntity,
+  OneToMany,
 } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
+import { Rate } from "./Rate";
 
 @ObjectType()
 @Entity()
@@ -37,4 +39,8 @@ export class User extends BaseEntity {
   @Field()
   @Column({ default: 0 })
   version: number;
+
+  @Field(() => [Rate])
+  @OneToMany(() => Rate, (rate) => rate.user)
+  rates: Rate[];
 }

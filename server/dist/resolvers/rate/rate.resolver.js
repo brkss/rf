@@ -16,14 +16,23 @@ exports.RateMealResolver = void 0;
 const middlewares_1 = require("../../utils/middlewares");
 const type_graphql_1 = require("type-graphql");
 const RateMealResponse_1 = require("../../utils/responses/meal/RateMealResponse");
-const User_1 = require("../../entity/User");
+const entity_1 = require("../../entity");
+const meal_resolver_1 = require("../meal.resolver");
 let RateMealResolver = class RateMealResolver {
     async rate(ctx) {
-        const user = await User_1.User.findOne({ where: { id: ctx.payload.usr_id } });
+        const user = await entity_1.User.findOne({ where: { id: ctx.payload.usr_id } });
         if (!user) {
             return {
                 status: false,
                 message: "User not found wtf you fucking witch !",
+            };
+        }
+        const mealResolver = new meal_resolver_1.MealResolver();
+        const mealTime = await mealResolver.mealTime();
+        if (!mealTime || !mealTime.is_current || !mealTime.meal) {
+            return {
+                status: false,
+                message: "Not meal time !",
             };
         }
         return {

@@ -9,50 +9,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Meal = void 0;
+exports.Rate = void 0;
 const typeorm_1 = require("typeorm");
+const Meal_1 = require("./Meal");
+const User_1 = require("./User");
 const type_graphql_1 = require("type-graphql");
-const OpenMeal_1 = require("./OpenMeal");
-const Rate_1 = require("./Rate");
-let Meal = class Meal extends typeorm_1.BaseEntity {
+let Rate = class Rate extends typeorm_1.BaseEntity {
 };
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.PrimaryGeneratedColumn)("uuid"),
     __metadata("design:type", String)
-], Meal.prototype, "id", void 0);
+], Rate.prototype, "id", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Meal.prototype, "name", void 0);
+    (0, type_graphql_1.Field)(() => User_1.User),
+    (0, typeorm_1.ManyToOne)(() => User_1.User, (user) => user.rates, {
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+    }),
+    __metadata("design:type", User_1.User)
+], Rate.prototype, "user", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Meal.prototype, "start", void 0);
-__decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Meal.prototype, "end", void 0);
+    (0, type_graphql_1.Field)(() => Meal_1.Meal),
+    (0, typeorm_1.ManyToOne)(() => Meal_1.Meal, (meal) => meal.rates, {
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+    }),
+    __metadata("design:type", Meal_1.Meal)
+], Rate.prototype, "meal", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
-], Meal.prototype, "created_at", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => OpenMeal_1.OpenMeal, (openmeals) => openmeals.meal),
-    __metadata("design:type", Array)
-], Meal.prototype, "openMeals", void 0);
-__decorate([
-    (0, type_graphql_1.Field)(() => [Rate_1.Rate]),
-    (0, typeorm_1.OneToMany)(() => Rate_1.Rate, (rate) => rate.meal),
-    __metadata("design:type", Array)
-], Meal.prototype, "rates", void 0);
-Meal = __decorate([
+], Rate.prototype, "created_at", void 0);
+Rate = __decorate([
     (0, type_graphql_1.ObjectType)(),
-    (0, typeorm_1.Entity)("meals")
-], Meal);
-exports.Meal = Meal;
-//# sourceMappingURL=Meal.js.map
+    (0, typeorm_1.Entity)("rates")
+], Rate);
+exports.Rate = Rate;
+//# sourceMappingURL=Rate.js.map

@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
 import { OpenMeal } from "./OpenMeal";
+import { Rate } from "./Rate";
 
 @ObjectType()
 @Entity("meals")
@@ -34,4 +35,8 @@ export class Meal extends BaseEntity {
 
   @OneToMany(() => OpenMeal, (openmeals) => openmeals.meal)
   openMeals: OpenMeal[];
+
+  @Field(() => [Rate])
+  @OneToMany(() => Rate, (rate) => rate.meal)
+  rates: Rate[];
 }
