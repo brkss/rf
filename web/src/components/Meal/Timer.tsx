@@ -31,9 +31,13 @@ export const Timer: React.FC<Props> = ({
     const start = moment(time);
     const diff = start.diff(mbet);
     const rest = start.diff(moment());
-    const p = Math.floor((rest * 100) / diff);
+    const p = (rest * 100) / diff;
     // to not exceed maximum update depth
-    if (!progress || p > progress + 1) SetProgress(p);
+    if (!progress || p <= progress - 0.1) {
+      console.log("changed !!!!!!");
+      SetProgress(p);
+    }
+    console.log("Progress ", p, progress);
     if (completed) {
       reload();
     } else {
