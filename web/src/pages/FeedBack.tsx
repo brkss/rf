@@ -30,7 +30,11 @@ export const FeedBack: React.FC = () => {
         <Timer
           time={checkTime()}
           label={data!.mealTime!.meal.start}
-          meal={data!.mealTime!.meal.name}
+          mealName={data!.mealTime!.meal.name}
+          mealBeforeEndTime={moment(
+            data!.mealTime!.meal_before.end,
+            "hh:mm:ss a"
+          ).toISOString()}
           reload={() => refetch()}
         />
       )}

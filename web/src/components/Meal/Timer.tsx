@@ -12,11 +12,12 @@ import CountDown from "react-countdown";
 interface Props {
   time: string;
   label: string;
-  meal: string;
+  mealName: string;
+  mealBeforeEndTime: string;
   reload: () => void;
 }
 
-export const Timer: React.FC<Props> = ({ time, label, meal, reload }) => {
+export const Timer: React.FC<Props> = ({ time, label, mealName, reload }) => {
   const renderer = ({ hours, minutes, seconds, completed }: any) => {
     if (completed) {
       // Render a complete state
@@ -45,7 +46,7 @@ export const Timer: React.FC<Props> = ({ time, label, meal, reload }) => {
           fontSize={"16px"}
           top={"10%"}
         >
-          🥗 {meal} will be in
+          🥗 {mealName} will be in
         </Heading>
         <CircularProgress
           size={"2xs"}
