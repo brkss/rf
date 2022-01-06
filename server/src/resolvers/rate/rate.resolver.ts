@@ -7,6 +7,7 @@ import moment from "moment";
 import { MealResolver } from "../meal.resolver";
 import { Between } from "typeorm";
 import { RateType } from "../../utils/types/Rate";
+import { checkExpression } from "../../utils/checker/rate.checker";
 
 @Resolver()
 export class RateMealResolver {
@@ -17,7 +18,7 @@ export class RateMealResolver {
     @Ctx() ctx: IContext
   ): Promise<RateMealResponse> {
     //return "damn right !!";
-    if (!expression) {
+    if (!expression || !checkExpression(expression)) {
       return {
         status: false,
         message: "Invalid data !",
@@ -50,7 +51,6 @@ export class RateMealResolver {
         created_at: Between(mealStart.toDate(), mealEnd.toDate()),
       },
     });
-    console.log("rates => ", rateRecord);
     if (rateRecord.length > 0) {
       return {
         status: false,

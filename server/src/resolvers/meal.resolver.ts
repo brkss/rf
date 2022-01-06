@@ -2,6 +2,7 @@ import { Resolver, Query } from "type-graphql";
 import { Meal } from "../entity/Meal";
 import moment from "moment";
 import { MealTimeResponse } from "../utils/responses/meal/MealTimeResponse";
+import { checkTargetMeal } from "../utils/checker/meal.checker";
 
 @Resolver()
 export class MealResolver {
@@ -12,9 +13,9 @@ export class MealResolver {
 
   // This function is not final
   // BIG MESS !!!
-  // this need recoding agent
   @Query(() => MealTimeResponse, { nullable: true })
   async mealTime(): Promise<MealTimeResponse | null> {
+    /*
     let now = new Date().toLocaleTimeString("en-EN", {
       timeZone: "Africa/Casablanca",
     });
@@ -29,6 +30,7 @@ export class MealResolver {
     }));
 
     let target: any;
+    
     // check if we are in meal interval
     for (let meal of mealsTime) {
       if (_now.isBetween(meal.start, meal.end)) {
@@ -66,8 +68,10 @@ export class MealResolver {
         } else target = meal;
       }
     }
-
-    const m = await Meal.findOne({ where: { id: target.id } });
+    */
+    const target = await checkTargetMeal();
+    console.log("target -> ", target.id);
+    const m = await Meal.findOne({ where: { id: target } });
     return {
       meal: m as Meal,
       is_current: false,
