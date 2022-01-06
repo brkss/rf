@@ -16,7 +16,6 @@ const checkStatsMeal = async () => {
     let now = new Date().toLocaleTimeString("en-EN", {
         timeZone: "Africa/Casablanca",
     });
-    now = "20:10:00 pm";
     const _now = (0, moment_1.default)(now, "hh:mm:ss a");
     for (let m of mealsTime) {
         if (_now.isBetween(m.start, m.end)) {
