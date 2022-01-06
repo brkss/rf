@@ -18,7 +18,6 @@ interface Props {
 
 export const Timer: React.FC<Props> = ({ time, label, meal, reload }) => {
   const renderer = ({ hours, minutes, seconds, completed }: any) => {
-    console.log("time : ", time);
     if (completed) {
       // Render a complete state
       reload();

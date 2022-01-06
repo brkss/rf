@@ -30,6 +30,7 @@ export type Meal = {
   end: Scalars['String'];
   id: Scalars['String'];
   name: Scalars['String'];
+  rates: Array<Rate>;
   start: Scalars['String'];
 };
 
@@ -38,11 +39,13 @@ export type MealTimeResponse = {
   is_current: Scalars['Boolean'];
   is_tomorrow: Scalars['Boolean'];
   meal: Meal;
+  meal_before: Meal;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   auth: AuthDefaultResponse;
+  rate: RateMealResponse;
 };
 
 
@@ -50,12 +53,39 @@ export type MutationAuthArgs = {
   code: Scalars['String'];
 };
 
+
+export type MutationRateArgs = {
+  expression: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
   me: User;
+  mealStats: StatsMealResponse;
   mealTime?: Maybe<MealTimeResponse>;
   ping: Scalars['String'];
   tping: Scalars['String'];
+};
+
+export type Rate = {
+  __typename?: 'Rate';
+  created_at: Scalars['DateTime'];
+  expression: Scalars['String'];
+  id: Scalars['String'];
+  meal: Meal;
+  user: User;
+};
+
+export type RateMealResponse = {
+  __typename?: 'RateMealResponse';
+  message?: Maybe<Scalars['String']>;
+  status: Scalars['Boolean'];
+};
+
+export type StatsMealResponse = {
+  __typename?: 'StatsMealResponse';
+  message?: Maybe<Scalars['String']>;
+  status: Scalars['Boolean'];
 };
 
 export type User = {
@@ -65,13 +95,15 @@ export type User = {
   created_at: Scalars['DateTime'];
   id: Scalars['String'];
   name: Scalars['String'];
+  rates: Array<Rate>;
   username: Scalars['String'];
+  version: Scalars['Float'];
 };
 
 export type MealTimeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MealTimeQuery = { __typename?: 'Query', mealTime?: { __typename?: 'MealTimeResponse', is_current: boolean, is_tomorrow: boolean, meal: { __typename?: 'Meal', id: string, name: string, start: string, end: string } } | null | undefined };
+export type MealTimeQuery = { __typename?: 'Query', mealTime?: { __typename?: 'MealTimeResponse', is_current: boolean, is_tomorrow: boolean, meal_before: { __typename?: 'Meal', id: string, name: string, start: string, end: string }, meal: { __typename?: 'Meal', id: string, name: string, start: string, end: string } } | null | undefined };
 
 export type AuthMutationVariables = Exact<{
   code: Scalars['String'];
@@ -91,6 +123,12 @@ export const MealTimeDocument = gql`
   mealTime {
     is_current
     is_tomorrow
+    meal_before {
+      id
+      name
+      start
+      end
+    }
     meal {
       id
       name
