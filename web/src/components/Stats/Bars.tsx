@@ -1,6 +1,6 @@
 import React from "react";
 import { Center, Box, Grid, Text, Heading } from "@chakra-ui/react";
-import { Bar } from "../Stats/Bar";
+import { Bar } from "./Bar";
 import { reactions } from "../../utils/data/reactions.data";
 
 export const Bars: React.FC = () => {

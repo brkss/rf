@@ -82,9 +82,17 @@ export type RateMealResponse = {
   status: Scalars['Boolean'];
 };
 
+export type Stats = {
+  __typename?: 'Stats';
+  count: Scalars['Float'];
+  ident: Scalars['String'];
+  percent: Scalars['Float'];
+};
+
 export type StatsMealResponse = {
   __typename?: 'StatsMealResponse';
   message?: Maybe<Scalars['String']>;
+  stats?: Maybe<Array<Stats>>;
   status: Scalars['Boolean'];
 };
 
@@ -111,6 +119,11 @@ export type RateMealMutationVariables = Exact<{
 
 
 export type RateMealMutation = { __typename?: 'Mutation', rate: { __typename?: 'RateMealResponse', status: boolean, message?: string | null | undefined } };
+
+export type MealStatsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MealStatsQuery = { __typename?: 'Query', mealStats: { __typename?: 'StatsMealResponse', status: boolean, message?: string | null | undefined, stats?: Array<{ __typename?: 'Stats', count: number, ident: string, percent: number }> | null | undefined } };
 
 export type AuthMutationVariables = Exact<{
   code: Scalars['String'];
@@ -206,6 +219,46 @@ export function useRateMealMutation(baseOptions?: Apollo.MutationHookOptions<Rat
 export type RateMealMutationHookResult = ReturnType<typeof useRateMealMutation>;
 export type RateMealMutationResult = Apollo.MutationResult<RateMealMutation>;
 export type RateMealMutationOptions = Apollo.BaseMutationOptions<RateMealMutation, RateMealMutationVariables>;
+export const MealStatsDocument = gql`
+    query MealStats {
+  mealStats {
+    status
+    message
+    stats {
+      count
+      ident
+      percent
+    }
+  }
+}
+    `;
+
+/**
+ * __useMealStatsQuery__
+ *
+ * To run a query within a React component, call `useMealStatsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMealStatsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMealStatsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMealStatsQuery(baseOptions?: Apollo.QueryHookOptions<MealStatsQuery, MealStatsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MealStatsQuery, MealStatsQueryVariables>(MealStatsDocument, options);
+      }
+export function useMealStatsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MealStatsQuery, MealStatsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MealStatsQuery, MealStatsQueryVariables>(MealStatsDocument, options);
+        }
+export type MealStatsQueryHookResult = ReturnType<typeof useMealStatsQuery>;
+export type MealStatsLazyQueryHookResult = ReturnType<typeof useMealStatsLazyQuery>;
+export type MealStatsQueryResult = Apollo.QueryResult<MealStatsQuery, MealStatsQueryVariables>;
 export const AuthDocument = gql`
     mutation Auth($code: String!) {
   auth(code: $code) {

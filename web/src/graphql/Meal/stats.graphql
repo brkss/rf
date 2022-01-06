@@ -1,0 +1,11 @@
+query MealStats{
+  mealStats {
+    status
+    message
+    stats {
+      count
+      ident
+      percent
+    }
+  }
+}
