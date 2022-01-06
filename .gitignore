@@ -3,13 +3,14 @@
 # dependencies
 /node_modules
 
+# dev 
 /dist
-
-# testing
-/coverage
 
 # production
 /build
+
+# pers
+todo.txt
 
 # misc
 .DS_Store
