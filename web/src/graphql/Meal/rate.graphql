@@ -1,0 +1,8 @@
+mutation RateMeal($expression: String!){
+
+  rate(expression: $expression){
+    status
+    message
+  }
+
+}

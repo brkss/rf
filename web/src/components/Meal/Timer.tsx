@@ -33,7 +33,7 @@ export const Timer: React.FC<Props> = ({
     const rest = start.diff(moment());
     const p = (rest * 100) / diff;
     // to not exceed maximum update depth
-    if (!progress || p <= progress - 0.1) {
+    if (!progress || p + 0.1 < progress) {
       console.log("changed !!!!!!");
       SetProgress(p);
     }

@@ -105,6 +105,13 @@ export type MealTimeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MealTimeQuery = { __typename?: 'Query', mealTime?: { __typename?: 'MealTimeResponse', is_current: boolean, is_tomorrow: boolean, meal_before: { __typename?: 'Meal', id: string, name: string, start: string, end: string }, meal: { __typename?: 'Meal', id: string, name: string, start: string, end: string } } | null | undefined };
 
+export type RateMealMutationVariables = Exact<{
+  expression: Scalars['String'];
+}>;
+
+
+export type RateMealMutation = { __typename?: 'Mutation', rate: { __typename?: 'RateMealResponse', status: boolean, message?: string | null | undefined } };
+
 export type AuthMutationVariables = Exact<{
   code: Scalars['String'];
 }>;
@@ -165,6 +172,40 @@ export function useMealTimeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<M
 export type MealTimeQueryHookResult = ReturnType<typeof useMealTimeQuery>;
 export type MealTimeLazyQueryHookResult = ReturnType<typeof useMealTimeLazyQuery>;
 export type MealTimeQueryResult = Apollo.QueryResult<MealTimeQuery, MealTimeQueryVariables>;
+export const RateMealDocument = gql`
+    mutation RateMeal($expression: String!) {
+  rate(expression: $expression) {
+    status
+    message
+  }
+}
+    `;
+export type RateMealMutationFn = Apollo.MutationFunction<RateMealMutation, RateMealMutationVariables>;
+
+/**
+ * __useRateMealMutation__
+ *
+ * To run a mutation, you first call `useRateMealMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRateMealMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [rateMealMutation, { data, loading, error }] = useRateMealMutation({
+ *   variables: {
+ *      expression: // value for 'expression'
+ *   },
+ * });
+ */
+export function useRateMealMutation(baseOptions?: Apollo.MutationHookOptions<RateMealMutation, RateMealMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RateMealMutation, RateMealMutationVariables>(RateMealDocument, options);
+      }
+export type RateMealMutationHookResult = ReturnType<typeof useRateMealMutation>;
+export type RateMealMutationResult = Apollo.MutationResult<RateMealMutation>;
+export type RateMealMutationOptions = Apollo.BaseMutationOptions<RateMealMutation, RateMealMutationVariables>;
 export const AuthDocument = gql`
     mutation Auth($code: String!) {
   auth(code: $code) {
