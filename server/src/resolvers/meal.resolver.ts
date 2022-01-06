@@ -21,6 +21,7 @@ export class MealResolver {
       meal: m as Meal,
       is_current: targetResp.is_current,
       is_tomorrow: targetResp.is_tomorrow,
+      meal_before: targetResp.meal_before!,
     };
   }
 }

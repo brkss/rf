@@ -11,4 +11,7 @@ export class MealTimeResponse {
 
   @Field(() => Meal)
   meal: Meal;
+
+  @Field(() => Meal)
+  meal_before: Meal;
 }

@@ -26,6 +26,10 @@ __decorate([
     (0, type_graphql_1.Field)(() => Meal_1.Meal),
     __metadata("design:type", Meal_1.Meal)
 ], MealTimeResponse.prototype, "meal", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(() => Meal_1.Meal),
+    __metadata("design:type", Meal_1.Meal)
+], MealTimeResponse.prototype, "meal_before", void 0);
 MealTimeResponse = __decorate([
     (0, type_graphql_1.ObjectType)()
 ], MealTimeResponse);

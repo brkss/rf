@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkTargetMeal = void 0;
+exports.mealBefore = exports.checkTargetMeal = void 0;
 const moment_1 = __importDefault(require("moment"));
 const Meal_1 = require("../../entity/Meal");
 const checkTargetMeal = async () => {
@@ -22,6 +22,7 @@ const checkTargetMeal = async () => {
         if (_now.isBetween(meal.start, meal.end)) {
             return {
                 target: meal,
+                meal_before: await (0, exports.mealBefore)(target.start),
                 is_current: true,
                 is_tomorrow: false,
             };
@@ -40,6 +41,7 @@ const checkTargetMeal = async () => {
     if (target) {
         return {
             target: target,
+            meal_before: await (0, exports.mealBefore)(target.start),
             is_tomorrow: false,
             is_current: false,
         };
@@ -56,9 +58,31 @@ const checkTargetMeal = async () => {
     }
     return {
         target: target,
+        meal_before: await (0, exports.mealBefore)(target.start.add(1, "day")),
         is_current: false,
         is_tomorrow: true,
     };
 };
 exports.checkTargetMeal = checkTargetMeal;
+const mealBefore = async (start) => {
+    const meals = await Meal_1.Meal.find();
+    const mealsTime = meals.map((meal) => ({
+        id: meal.id,
+        start: (0, moment_1.default)(meal.start, "hh:mm:ss a"),
+        end: (0, moment_1.default)(meal.end, "hh:mm:ss a"),
+    }));
+    let target = null;
+    for (let meal of mealsTime) {
+        if (start.isAfter(meal.start)) {
+            if (target) {
+                if (target.start.isBefore(meal.start))
+                    target = meal;
+            }
+            else
+                target = meal;
+        }
+    }
+    return await Meal_1.Meal.findOne({ where: { id: target.id } });
+};
+exports.mealBefore = mealBefore;
 //# sourceMappingURL=meal.checker.js.map
