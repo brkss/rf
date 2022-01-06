@@ -69,6 +69,8 @@ const generateStats = (recs) => {
     stats.map((s) => {
         count += s.count;
     });
+    if (recs.length == 0)
+        return stats;
     stats = stats.map((s) => ({
         count: s.count,
         ident: s.ident,
