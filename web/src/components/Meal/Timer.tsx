@@ -8,6 +8,7 @@ import {
   CircularProgressLabel,
 } from "@chakra-ui/react";
 import CountDown from "react-countdown";
+import moment from "moment";
 
 interface Props {
   time: string;
@@ -17,13 +18,25 @@ interface Props {
   reload: () => void;
 }
 
-export const Timer: React.FC<Props> = ({ time, label, mealName, reload }) => {
+export const Timer: React.FC<Props> = ({
+  time,
+  label,
+  mealName,
+  reload,
+  mealBeforeEndTime,
+}) => {
+  const [progress, SetProgress] = React.useState<number | null>(null);
   const renderer = ({ hours, minutes, seconds, completed }: any) => {
+    const mbet = moment(mealBeforeEndTime);
+    const start = moment(time);
+    const diff = start.diff(mbet);
+    const rest = start.diff(moment());
+    const p = Math.floor((rest * 100) / diff);
+    // to not exceed maximum update depth
+    if (!progress || p > progress + 1) SetProgress(p);
     if (completed) {
-      // Render a complete state
       reload();
     } else {
-      // Render a countdown
       return (
         <span>
           {formatTime(hours)}:{formatTime(minutes)}:{formatTime(seconds)}
@@ -51,7 +64,7 @@ export const Timer: React.FC<Props> = ({ time, label, mealName, reload }) => {
         <CircularProgress
           size={"2xs"}
           thickness={"5px"}
-          value={40}
+          value={progress || 100}
           color="green.400"
         >
           <CircularProgressLabel
