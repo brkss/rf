@@ -14,7 +14,24 @@ const token_1 = require("./utils/token");
 const cors_1 = __importDefault(require("cors"));
 const typeorm_1 = require("typeorm");
 (async () => {
-    await (0, typeorm_1.createConnection)();
+    await (0, typeorm_1.createConnection)({
+        type: "mysql",
+        host: process.env.DB_HOST || "localhost",
+        port: 3306,
+        username: process.env.DB_USER || "root",
+        password: process.env.DB_PASS || "",
+        database: process.env.DB_NAME || "rate_food",
+        synchronize: true,
+        logging: false,
+        entities: ["dist/entity/**/*.js"],
+        migrations: ["dist/migration/**/*.js"],
+        subscribers: ["dist/subscriber/**/*.js"],
+        cli: {
+            entitiesDir: "dist/entity",
+            migrationsDir: "dist/migration",
+            subscribersDir: "dist/subscriber",
+        },
+    });
     const app = (0, express_1.default)();
     app.use((0, cors_1.default)({
         origin: "http://localhost:3000",
