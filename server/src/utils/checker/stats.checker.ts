@@ -1,5 +1,6 @@
-import { Meal } from "../../entity/Meal";
+import { Meal, Rate } from "../../entity";
 import moment, { Moment } from "moment";
+import { RATES } from "../types/Rate";
 
 interface IStatsMeal {
   id: string;
@@ -22,7 +23,7 @@ export const checkStatsMeal = async () => {
   let now = new Date().toLocaleTimeString("en-EN", {
     timeZone: "Africa/Casablanca",
   });
-  now = "20:10:00 pm";
+  //now = "20:10:00 pm";
   const _now = moment(now, "hh:mm:ss a");
 
   for (let m of mealsTime) {
@@ -66,4 +67,26 @@ export const checkStatsMeal = async () => {
     }
   }
   return target;
+};
+
+// Count every expression to get meal final stats !
+export const generateStats = (recs: Rate[]) => {
+  // collect stats
+  let stats = RATES.map((r) => ({
+    ident: r,
+    count: recs.filter((rec) => rec.expression == r).length,
+    percent: 0,
+  }));
+
+  let count = 0;
+  stats.map((s) => {
+    count += s.count;
+  });
+
+  stats = stats.map((s) => ({
+    count: s.count,
+    ident: s.ident,
+    percent: (s.count * 100) / count,
+  }));
+  return stats;
 };

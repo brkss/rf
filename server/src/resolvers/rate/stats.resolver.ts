@@ -1,9 +1,11 @@
 import { Between } from "typeorm";
 import { Resolver, Query } from "type-graphql";
 import { Meal, Rate } from "../../entity";
-import { checkStatsMeal } from "../../utils/checker/stats.checker";
+import {
+  checkStatsMeal,
+  generateStats,
+} from "../../utils/checker/stats.checker";
 import { StatsMealResponse } from "../../utils/responses/meal/StatsMealResponse";
-import { RATES } from "../../utils/types/Rate";
 
 @Resolver()
 export class StatsResolver {
@@ -28,31 +30,10 @@ export class StatsResolver {
       },
     });
     console.log("records : ", records);
-    gen(records);
+    const stats = generateStats(records);
     return {
       status: true,
+      stats: stats,
     };
   }
 }
-// Count every expression to get meal final stats !
-const gen = async (recs: Rate[]) => {
-  // collect stats
-  let stats = RATES.map((r) => ({
-    ident: r,
-    count: recs.filter((rec) => rec.expression == r).length,
-  }));
-
-  let count = 0;
-  stats.map((s) => {
-    count += s.count;
-  });
-
-  stats = stats.map((s) => ({
-    count: s.count,
-    ident: s.ident,
-    percent: (s.count * 100) / count,
-  }));
-
-  console.log("count => ", count);
-  console.log("generated stats : ", stats);
-};

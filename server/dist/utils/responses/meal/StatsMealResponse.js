@@ -21,8 +21,29 @@ __decorate([
     (0, type_graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
 ], StatsMealResponse.prototype, "message", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(() => [Stats], { nullable: true }),
+    __metadata("design:type", Array)
+], StatsMealResponse.prototype, "stats", void 0);
 StatsMealResponse = __decorate([
     (0, type_graphql_1.ObjectType)()
 ], StatsMealResponse);
 exports.StatsMealResponse = StatsMealResponse;
+let Stats = class Stats {
+};
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", Number)
+], Stats.prototype, "count", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], Stats.prototype, "ident", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", Number)
+], Stats.prototype, "percent", void 0);
+Stats = __decorate([
+    (0, type_graphql_1.ObjectType)()
+], Stats);
 //# sourceMappingURL=StatsMealResponse.js.map
