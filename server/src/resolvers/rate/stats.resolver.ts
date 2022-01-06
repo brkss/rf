@@ -37,9 +37,22 @@ export class StatsResolver {
 // Count every expression to get meal final stats !
 const gen = async (recs: Rate[]) => {
   // collect stats
-  const stats = RATES.map((r) => ({
+  let stats = RATES.map((r) => ({
     ident: r,
     count: recs.filter((rec) => rec.expression == r).length,
   }));
+
+  let count = 0;
+  stats.map((s) => {
+    count += s.count;
+  });
+
+  stats = stats.map((s) => ({
+    count: s.count,
+    ident: s.ident,
+    percent: (s.count * 100) / count,
+  }));
+
+  console.log("count => ", count);
   console.log("generated stats : ", stats);
 };

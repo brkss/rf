@@ -52,10 +52,20 @@ StatsResolver = __decorate([
 ], StatsResolver);
 exports.StatsResolver = StatsResolver;
 const gen = async (recs) => {
-    const stats = Rate_1.RATES.map((r) => ({
+    let stats = Rate_1.RATES.map((r) => ({
         ident: r,
         count: recs.filter((rec) => rec.expression == r).length,
     }));
+    let count = 0;
+    stats.map((s) => {
+        count += s.count;
+    });
+    stats = stats.map((s) => ({
+        count: s.count,
+        ident: s.ident,
+        percent: (s.count * 100) / count,
+    }));
+    console.log("count => ", count);
     console.log("generated stats : ", stats);
 };
 //# sourceMappingURL=stats.resolver.js.map
