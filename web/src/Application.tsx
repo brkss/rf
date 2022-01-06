@@ -19,16 +19,20 @@ export const Application: React.FC = () => {
     fetch(`${DEFAULT_API_URL}/refresh_token`, {
       credentials: "include",
       method: "POST",
-    }).then(async (res) => {
-      const data = await res.json();
-      if (data.status === true) {
-        setAccessToken(data.token);
-        console.log("access token", getAccessToken());
-      }
-      console.log("refresh token result => ", data);
-
-      setLoading(false);
-    });
+    })
+      .then(async (res) => {
+        const data = await res.json();
+        if (data.status === true) {
+          setAccessToken(data.token);
+          console.log("access token", getAccessToken());
+        }
+        console.log("refresh token result => ", data);
+        setLoading(false);
+      })
+      .catch((e) => {
+        console.log("Sonmething went wrong !", e);
+        setLoading(false);
+      });
   }, []);
 
   if (loading)
