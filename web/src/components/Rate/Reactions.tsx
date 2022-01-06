@@ -1,6 +1,7 @@
 import React from "react";
 import { Center, Box, Heading, Grid, Text } from "@chakra-ui/react";
 import { reactions } from "../../utils/data/reactions.data";
+import { useRateMealMutation } from "../../generated/graphql";
 
 interface Props {
   meal: string;
@@ -9,6 +10,26 @@ interface Props {
 export const Reactions: React.FC<Props> = ({ meal }) => {
   const [selected, SetSelected] = React.useState(-1);
   const [preSelect, SetPreSelect] = React.useState(-1);
+  const [rate] = useRateMealMutation();
+
+  const handleRate = () => {
+    if (selected == -1) {
+      // handle error !
+      return;
+    }
+    const expression = reactions[selected].uid;
+    rate({
+      variables: {
+        expression: expression,
+      },
+    })
+      .then((res) => {
+        console.log("rate response => ", res);
+      })
+      .catch((e) => {
+        console.log("Something went wrong rating this meal !", e);
+      });
+  };
 
   return (
     <Box
@@ -61,6 +82,7 @@ export const Reactions: React.FC<Props> = ({ meal }) => {
           ))}
         </Grid>
         <Text
+          onClick={() => handleRate()}
           transition={".5s"}
           pos={"absolute"}
           bottom={"20%"}
