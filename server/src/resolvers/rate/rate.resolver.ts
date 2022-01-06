@@ -8,6 +8,7 @@ import { MealResolver } from "../meal.resolver";
 import { Between } from "typeorm";
 import { RateType } from "../../utils/types/Rate";
 import { checkExpression } from "../../utils/checker/rate.checker";
+import { RATES } from "../../utils/types/Rate";
 
 @Resolver()
 export class RateMealResolver {

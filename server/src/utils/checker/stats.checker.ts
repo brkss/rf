@@ -22,7 +22,7 @@ export const checkStatsMeal = async () => {
   let now = new Date().toLocaleTimeString("en-EN", {
     timeZone: "Africa/Casablanca",
   });
-  //const now = "1:00:00 pm";
+  now = "20:10:00 pm";
   const _now = moment(now, "hh:mm:ss a");
 
   for (let m of mealsTime) {

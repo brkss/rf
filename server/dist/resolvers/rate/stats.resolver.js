@@ -15,6 +15,7 @@ const type_graphql_1 = require("type-graphql");
 const entity_1 = require("../../entity");
 const stats_checker_1 = require("../../utils/checker/stats.checker");
 const StatsMealResponse_1 = require("../../utils/responses/meal/StatsMealResponse");
+const Rate_1 = require("../../utils/types/Rate");
 let StatsResolver = class StatsResolver {
     async mealStats() {
         const target = await (0, stats_checker_1.checkStatsMeal)();
@@ -34,6 +35,7 @@ let StatsResolver = class StatsResolver {
             },
         });
         console.log("records : ", records);
+        gen(records);
         return {
             status: true,
         };
@@ -49,4 +51,11 @@ StatsResolver = __decorate([
     (0, type_graphql_1.Resolver)()
 ], StatsResolver);
 exports.StatsResolver = StatsResolver;
+const gen = async (recs) => {
+    const stats = Rate_1.RATES.map((r) => ({
+        ident: r,
+        count: recs.filter((rec) => rec.expression == r).length,
+    }));
+    console.log("generated stats : ", stats);
+};
 //# sourceMappingURL=stats.resolver.js.map

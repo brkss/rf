@@ -3,6 +3,7 @@ import { Resolver, Query } from "type-graphql";
 import { Meal, Rate } from "../../entity";
 import { checkStatsMeal } from "../../utils/checker/stats.checker";
 import { StatsMealResponse } from "../../utils/responses/meal/StatsMealResponse";
+import { RATES } from "../../utils/types/Rate";
 
 @Resolver()
 export class StatsResolver {
@@ -27,8 +28,18 @@ export class StatsResolver {
       },
     });
     console.log("records : ", records);
+    gen(records);
     return {
       status: true,
     };
   }
 }
+// Count every expression to get meal final stats !
+const gen = async (recs: Rate[]) => {
+  // collect stats
+  const stats = RATES.map((r) => ({
+    ident: r,
+    count: recs.filter((rec) => rec.expression == r).length,
+  }));
+  console.log("generated stats : ", stats);
+};
