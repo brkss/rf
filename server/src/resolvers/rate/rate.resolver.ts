@@ -2,7 +2,7 @@ import { isUserAuth } from "../../utils/middlewares";
 import { Resolver, Ctx, Mutation, UseMiddleware, Arg } from "type-graphql";
 import { RateMealResponse } from "../../utils/responses/meal/RateMealResponse";
 import { IContext } from "../../utils/types/Context";
-import { User, Meal, Rate } from "../../entity";
+import { User, Rate } from "../../entity";
 import moment from "moment";
 import { MealResolver } from "../meal.resolver";
 import { Between } from "typeorm";

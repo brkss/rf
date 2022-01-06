@@ -1,6 +1,5 @@
 import { Resolver, Query } from "type-graphql";
 import { Meal } from "../entity/Meal";
-import moment from "moment";
 import { MealTimeResponse } from "../utils/responses/meal/MealTimeResponse";
 import { checkTargetMeal } from "../utils/checker/meal.checker";
 
