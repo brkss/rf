@@ -27,13 +27,13 @@ let StatsResolver = class StatsResolver {
         const start = target.start;
         const end = target.end;
         const meal = await entity_1.Meal.findOne({ where: { id: target.id } });
-        const record = await entity_1.Rate.findOne({
+        const records = await entity_1.Rate.find({
             where: {
                 meal: meal,
                 created_at: (0, typeorm_1.Between)(start.toDate(), end.toDate()),
             },
         });
-        console.log("target in stats : ", meal);
+        console.log("records : ", records);
         return {
             status: true,
         };

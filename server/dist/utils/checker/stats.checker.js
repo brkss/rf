@@ -41,10 +41,18 @@ const checkStatsMeal = async () => {
                 if (meal.start
                     .subtract(1, "days")
                     .diff(target.start.subtract(1, "days")) > 0)
-                    target = meal;
+                    target = {
+                        id: meal.id,
+                        start: meal.start.subtract(1, "day"),
+                        end: meal.end.subtract(1, "day"),
+                    };
             }
             else
-                target = meal;
+                target = {
+                    id: meal.id,
+                    start: meal.start.subtract(1, "day"),
+                    end: meal.end.subtract(1, "day"),
+                };
         }
     }
     return target;

@@ -20,13 +20,13 @@ export class StatsResolver {
     const start = target.start;
     const end = target.end;
     const meal = await Meal.findOne({ where: { id: target!.id } });
-    const record = await Rate.findOne({
+    const records = await Rate.find({
       where: {
         meal: meal,
         created_at: Between(start.toDate(), end.toDate()),
       },
     });
-    console.log("target in stats : ", meal);
+    console.log("records : ", records);
     return {
       status: true,
     };
