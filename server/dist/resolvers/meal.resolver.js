@@ -19,13 +19,13 @@ let MealResolver = class MealResolver {
         return "tpong !";
     }
     async mealTime() {
-        const target = await (0, meal_checker_1.checkTargetMeal)();
-        console.log("target -> ", target.id);
-        const m = await Meal_1.Meal.findOne({ where: { id: target } });
+        const targetResp = await (0, meal_checker_1.checkTargetMeal)();
+        console.log("target -> ", targetResp.target.id);
+        const m = await Meal_1.Meal.findOne({ where: { id: targetResp.target.id } });
         return {
             meal: m,
-            is_current: false,
-            is_tomorrow: true,
+            is_current: targetResp.is_current,
+            is_tomorrow: targetResp.is_tomorrow,
         };
     }
 };

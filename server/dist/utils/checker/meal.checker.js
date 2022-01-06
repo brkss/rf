@@ -20,7 +20,11 @@ const checkTargetMeal = async () => {
     let target = null;
     for (let meal of mealsTime) {
         if (_now.isBetween(meal.start, meal.end)) {
-            return meal;
+            return {
+                target: meal,
+                is_current: true,
+                is_tomorrow: false,
+            };
         }
     }
     for (let meal of mealsTime) {
@@ -34,7 +38,11 @@ const checkTargetMeal = async () => {
         }
     }
     if (target) {
-        return target;
+        return {
+            target: target,
+            is_tomorrow: false,
+            is_current: false,
+        };
     }
     for (let meal of mealsTime) {
         if (meal.start.add(1, "days").diff(_now) > 0) {
@@ -46,7 +54,11 @@ const checkTargetMeal = async () => {
                 target = meal;
         }
     }
-    return target;
+    return {
+        target: target,
+        is_current: false,
+        is_tomorrow: true,
+    };
 };
 exports.checkTargetMeal = checkTargetMeal;
 //# sourceMappingURL=meal.checker.js.map

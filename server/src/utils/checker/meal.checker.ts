@@ -7,7 +7,13 @@ interface ITargetMeal {
   end: Moment;
 }
 
-export const checkTargetMeal = async (): Promise<ITargetMeal> => {
+interface ITargetMealResponse {
+  target: ITargetMeal;
+  is_tomorrow: boolean;
+  is_current: boolean;
+}
+
+export const checkTargetMeal = async (): Promise<ITargetMealResponse> => {
   let now = new Date().toLocaleTimeString("en-EN", {
     timeZone: "Africa/Casablanca",
   });
@@ -25,7 +31,11 @@ export const checkTargetMeal = async (): Promise<ITargetMeal> => {
   // check if we are in meal interval
   for (let meal of mealsTime) {
     if (_now.isBetween(meal.start, meal.end)) {
-      return meal;
+      return {
+        target: meal,
+        is_current: true,
+        is_tomorrow: false,
+      };
     }
   }
   // get closest meal !
@@ -38,7 +48,11 @@ export const checkTargetMeal = async (): Promise<ITargetMeal> => {
   }
 
   if (target) {
-    return target;
+    return {
+      target: target,
+      is_tomorrow: false,
+      is_current: false,
+    };
   }
   // get closest meal if we past the last meal !
   for (let meal of mealsTime) {
@@ -49,5 +63,9 @@ export const checkTargetMeal = async (): Promise<ITargetMeal> => {
       } else target = meal;
     }
   }
-  return target!;
+  return {
+    target: target!,
+    is_current: false,
+    is_tomorrow: true,
+  };
 };
