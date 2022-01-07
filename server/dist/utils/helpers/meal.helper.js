@@ -73,9 +73,10 @@ const mealBefore = async (start) => {
     }));
     let target = null;
     for (let meal of mealsTime) {
-        if (start.isAfter(meal.start)) {
+        if (start.isAfter(meal.start) || start.isSame(meal.start)) {
             if (target) {
-                if (target.start.isBefore(meal.start))
+                if (target.start.isBefore(meal.start) ||
+                    target.start.isSame(meal.start))
                     target = meal;
             }
             else

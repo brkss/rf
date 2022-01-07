@@ -76,7 +76,7 @@ export const getTargetedMeal = async (): Promise<ITargetMealResponse> => {
 
 export const mealBefore = async (start: Moment): Promise<Meal | undefined> => {
   const meals = await Meal.find();
-  const mealsTime = meals!.map((meal) => ({
+  const mealsTime = meals.map((meal) => ({
     id: meal.id,
     start: moment(meal.start, "hh:mm:ss a"),
     end: moment(meal.end, "hh:mm:ss a"),
@@ -84,12 +84,15 @@ export const mealBefore = async (start: Moment): Promise<Meal | undefined> => {
 
   let target: any = null;
   for (let meal of mealsTime) {
-    if (start.isAfter(meal.start)) {
+    if (start.isAfter(meal.start) || start.isSame(meal.start)) {
       if (target) {
-        if (target.start.isBefore(meal.start)) target = meal;
+        if (
+          target.start.isBefore(meal.start) ||
+          target.start.isSame(meal.start)
+        )
+          target = meal;
       } else target = meal;
     }
   }
-
   return await Meal.findOne({ where: { id: target.id } });
 };
