@@ -34,12 +34,18 @@ export type Meal = {
   start: Scalars['String'];
 };
 
+export type MealBefore = {
+  __typename?: 'MealBefore';
+  is_yesterday: Scalars['Boolean'];
+  meal: Meal;
+};
+
 export type MealTimeResponse = {
   __typename?: 'MealTimeResponse';
   is_current: Scalars['Boolean'];
   is_tomorrow: Scalars['Boolean'];
   meal: Meal;
-  meal_before: Meal;
+  meal_before: MealBefore;
 };
 
 export type Mutation = {
@@ -111,7 +117,7 @@ export type User = {
 export type MealTimeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MealTimeQuery = { __typename?: 'Query', mealTime?: { __typename?: 'MealTimeResponse', is_current: boolean, is_tomorrow: boolean, meal_before: { __typename?: 'Meal', id: string, name: string, start: string, end: string }, meal: { __typename?: 'Meal', id: string, name: string, start: string, end: string } } | null | undefined };
+export type MealTimeQuery = { __typename?: 'Query', mealTime?: { __typename?: 'MealTimeResponse', is_current: boolean, is_tomorrow: boolean, meal_before: { __typename?: 'MealBefore', is_yesterday: boolean, meal: { __typename?: 'Meal', id: string, name: string, start: string, end: string } }, meal: { __typename?: 'Meal', id: string, name: string, start: string, end: string } } | null | undefined };
 
 export type RateMealMutationVariables = Exact<{
   expression: Scalars['String'];
@@ -144,10 +150,13 @@ export const MealTimeDocument = gql`
     is_current
     is_tomorrow
     meal_before {
-      id
-      name
-      start
-      end
+      meal {
+        id
+        name
+        start
+        end
+      }
+      is_yesterday
     }
     meal {
       id

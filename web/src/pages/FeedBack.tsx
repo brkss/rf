@@ -8,15 +8,19 @@ export const FeedBack: React.FC = () => {
   const { data, loading, error, refetch } = useMealTimeQuery();
   const toast = useToast();
 
-  const checkTime = () => {
-    if (data!.mealTime!.is_tomorrow) {
-      return moment(data!.mealTime!.meal.start, "hh:mm:ss a")
-        .add(1, "days")
-        .toISOString();
+  const checkTime = (
+    time: string,
+    is_tomorrow?: boolean,
+    is_yersterday?: boolean
+  ) => {
+    if (is_tomorrow) {
+      return moment(time, "hh:mm:ss a").add(1, "days").toISOString();
+    } else if (is_yersterday) {
+      return moment(time, "hh:mm:ss a").subtract(1, "days").toISOString();
     }
-    return moment(data!.mealTime!.meal.start, "hh:mm:ss a").toISOString();
+    return moment(time, "hh:mm:ss a").toISOString();
   };
-  if (loading)
+  if (loading || !data || !data.mealTime)
     return (
       <Center h={"100vh"}>
         <Spinner />
@@ -28,13 +32,18 @@ export const FeedBack: React.FC = () => {
         <Reactions meal={data!.mealTime!.meal.name} />
       ) : (
         <Timer
-          time={checkTime()}
+          time={checkTime(
+            data.mealTime.meal.start,
+            data.mealTime.is_tomorrow,
+            false
+          )}
           label={data!.mealTime!.meal.start}
           mealName={data!.mealTime!.meal.name}
-          mealBeforeEndTime={moment(
-            data!.mealTime!.meal_before.end,
-            "hh:mm:ss a"
-          ).toISOString()}
+          mealBeforeEndTime={checkTime(
+            data.mealTime.meal_before.meal.start,
+            false,
+            data.mealTime.meal_before.is_yesterday
+          )}
           reload={() => refetch()}
         />
       )}

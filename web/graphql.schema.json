@@ -206,6 +206,49 @@
       },
       {
         "kind": "OBJECT",
+        "name": "MealBefore",
+        "description": null,
+        "fields": [
+          {
+            "name": "is_yesterday",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "meal",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Meal",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "MealTimeResponse",
         "description": null,
         "fields": [
@@ -266,7 +309,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "Meal",
+                "name": "MealBefore",
                 "ofType": null
               }
             },

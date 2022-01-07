@@ -4,10 +4,13 @@ query MealTime{
     is_current
     is_tomorrow
     meal_before {
-      id
-      name
-      start
-      end
+      meal{
+        id
+        name
+        start
+        end
+      }
+      is_yesterday
     }
     meal {
       id
