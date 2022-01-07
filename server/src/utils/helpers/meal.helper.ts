@@ -9,9 +9,14 @@ interface ITargetMeal {
 
 interface ITargetMealResponse {
   target: ITargetMeal;
-  meal_before: Meal | undefined;
+  meal_before: IMealBefore;
   is_tomorrow: boolean;
   is_current: boolean;
+}
+
+interface IMealBefore {
+  meal: Meal;
+  is_yesterday: boolean;
 }
 
 export const getTargetedMeal = async (): Promise<ITargetMealResponse> => {
@@ -74,7 +79,8 @@ export const getTargetedMeal = async (): Promise<ITargetMealResponse> => {
   };
 };
 
-export const mealBefore = async (start: Moment): Promise<Meal | undefined> => {
+export const mealBefore = async (start: Moment): Promise<IMealBefore> => {
+  let isy = false;
   const meals = await Meal.find();
   const mealsTime = meals.map((meal) => ({
     id: meal.id,
@@ -84,15 +90,33 @@ export const mealBefore = async (start: Moment): Promise<Meal | undefined> => {
 
   let target: any = null;
   for (let meal of mealsTime) {
-    if (start.isAfter(meal.start) || start.isSame(meal.start)) {
+    if (start.isAfter(meal.start)) {
       if (target) {
-        if (
-          target.start.isBefore(meal.start) ||
-          target.start.isSame(meal.start)
-        )
-          target = meal;
+        if (target.start.isBefore(meal.start)) target = meal;
       } else target = meal;
     }
   }
-  return await Meal.findOne({ where: { id: target.id } });
+  if (!target) {
+    isy = true;
+    for (let meal of mealsTime) {
+      if (start.isAfter(meal.start.subtract(1, "day"))) {
+        if (target) {
+          if (
+            target.start
+              .subtract(1, "day")
+              .isBefore(meal.start.subtract(1, "day"))
+          ) {
+            target = meal;
+          }
+        } else {
+          target = meal;
+        }
+      }
+    }
+  }
+  const meal = await Meal.findOne({ where: { id: target.id } });
+  return {
+    meal: meal!,
+    is_yesterday: isy,
+  };
 };

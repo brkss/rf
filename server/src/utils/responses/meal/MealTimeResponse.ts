@@ -2,6 +2,15 @@ import { Field, ObjectType } from "type-graphql";
 import { Meal } from "../../../entity/Meal";
 
 @ObjectType()
+class MealBefore {
+  @Field(() => Meal)
+  meal: Meal;
+
+  @Field()
+  is_yesterday: boolean;
+}
+
+@ObjectType()
 export class MealTimeResponse {
   @Field()
   is_current: boolean;
@@ -12,6 +21,6 @@ export class MealTimeResponse {
   @Field(() => Meal)
   meal: Meal;
 
-  @Field(() => Meal)
-  meal_before: Meal;
+  @Field(() => MealBefore)
+  meal_before: MealBefore;
 }

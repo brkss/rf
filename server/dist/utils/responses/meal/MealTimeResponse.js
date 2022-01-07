@@ -12,6 +12,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MealTimeResponse = void 0;
 const type_graphql_1 = require("type-graphql");
 const Meal_1 = require("../../../entity/Meal");
+let MealBefore = class MealBefore {
+};
+__decorate([
+    (0, type_graphql_1.Field)(() => Meal_1.Meal),
+    __metadata("design:type", Meal_1.Meal)
+], MealBefore.prototype, "meal", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", Boolean)
+], MealBefore.prototype, "is_yesterday", void 0);
+MealBefore = __decorate([
+    (0, type_graphql_1.ObjectType)()
+], MealBefore);
 let MealTimeResponse = class MealTimeResponse {
 };
 __decorate([
@@ -27,8 +40,8 @@ __decorate([
     __metadata("design:type", Meal_1.Meal)
 ], MealTimeResponse.prototype, "meal", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(() => Meal_1.Meal),
-    __metadata("design:type", Meal_1.Meal)
+    (0, type_graphql_1.Field)(() => MealBefore),
+    __metadata("design:type", MealBefore)
 ], MealTimeResponse.prototype, "meal_before", void 0);
 MealTimeResponse = __decorate([
     (0, type_graphql_1.ObjectType)()

@@ -65,6 +65,7 @@ const getTargetedMeal = async () => {
 };
 exports.getTargetedMeal = getTargetedMeal;
 const mealBefore = async (start) => {
+    let isy = false;
     const meals = await Meal_1.Meal.find();
     const mealsTime = meals.map((meal) => ({
         id: meal.id,
@@ -73,17 +74,37 @@ const mealBefore = async (start) => {
     }));
     let target = null;
     for (let meal of mealsTime) {
-        if (start.isAfter(meal.start) || start.isSame(meal.start)) {
+        if (start.isAfter(meal.start)) {
             if (target) {
-                if (target.start.isBefore(meal.start) ||
-                    target.start.isSame(meal.start))
+                if (target.start.isBefore(meal.start))
                     target = meal;
             }
             else
                 target = meal;
         }
     }
-    return await Meal_1.Meal.findOne({ where: { id: target.id } });
+    if (!target) {
+        isy = true;
+        for (let meal of mealsTime) {
+            if (start.isAfter(meal.start.subtract(1, "day"))) {
+                if (target) {
+                    if (target.start
+                        .subtract(1, "day")
+                        .isBefore(meal.start.subtract(1, "day"))) {
+                        target = meal;
+                    }
+                }
+                else {
+                    target = meal;
+                }
+            }
+        }
+    }
+    const meal = await Meal_1.Meal.findOne({ where: { id: target.id } });
+    return {
+        meal: meal,
+        is_yesterday: isy,
+    };
 };
 exports.mealBefore = mealBefore;
 //# sourceMappingURL=meal.helper.js.map
