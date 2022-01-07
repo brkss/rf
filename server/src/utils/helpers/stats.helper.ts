@@ -12,7 +12,7 @@ interface IStatsMeal {
 // RETURN :
 // @meal : Promise<Meal>
 
-export const checkStatsMeal = async () => {
+export const getPreviousMeal = async () => {
   const meals = await Meal.find();
   const mealsTime = meals.map((meal) => ({
     id: meal.id,

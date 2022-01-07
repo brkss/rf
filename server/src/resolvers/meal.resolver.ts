@@ -1,7 +1,7 @@
 import { Resolver, Query } from "type-graphql";
 import { Meal } from "../entity/Meal";
 import { MealTimeResponse } from "../utils/responses/meal/MealTimeResponse";
-import { checkTargetMeal } from "../utils/checker/meal.checker";
+import { getTargetedMeal } from "../utils";
 
 @Resolver()
 export class MealResolver {
@@ -14,7 +14,7 @@ export class MealResolver {
   // BIG MESS !!!
   @Query(() => MealTimeResponse, { nullable: true })
   async mealTime(): Promise<MealTimeResponse | null> {
-    const targetResp = await checkTargetMeal();
+    const targetResp = await getTargetedMeal();
     console.log("target -> ", targetResp.target.id);
     const m = await Meal.findOne({ where: { id: targetResp.target.id } });
     return {

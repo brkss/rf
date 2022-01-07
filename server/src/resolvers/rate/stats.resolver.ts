@@ -1,10 +1,7 @@
 import { Between } from "typeorm";
 import { Resolver, Query } from "type-graphql";
 import { Meal, Rate } from "../../entity";
-import {
-  checkStatsMeal,
-  generateStats,
-} from "../../utils/checker/stats.checker";
+import { getPreviousMeal, generateStats } from "../../utils";
 import { StatsMealResponse } from "../../utils/responses/meal/StatsMealResponse";
 
 @Resolver()
@@ -13,7 +10,7 @@ export class StatsResolver {
   async mealStats(): Promise<StatsMealResponse> {
     // get meal in range
     //const now = new Date().toLocaleTimeString(times);
-    const target = await checkStatsMeal();
+    const target = await getPreviousMeal();
     if (!target) {
       return {
         status: false,

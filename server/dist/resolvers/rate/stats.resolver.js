@@ -13,11 +13,11 @@ exports.StatsResolver = void 0;
 const typeorm_1 = require("typeorm");
 const type_graphql_1 = require("type-graphql");
 const entity_1 = require("../../entity");
-const stats_checker_1 = require("../../utils/checker/stats.checker");
+const utils_1 = require("../../utils");
 const StatsMealResponse_1 = require("../../utils/responses/meal/StatsMealResponse");
 let StatsResolver = class StatsResolver {
     async mealStats() {
-        const target = await (0, stats_checker_1.checkStatsMeal)();
+        const target = await (0, utils_1.getPreviousMeal)();
         if (!target) {
             return {
                 status: false,
@@ -34,7 +34,7 @@ let StatsResolver = class StatsResolver {
             },
         });
         console.log("records : ", records);
-        const stats = (0, stats_checker_1.generateStats)(records);
+        const stats = (0, utils_1.generateStats)(records);
         return {
             status: true,
             stats: stats,

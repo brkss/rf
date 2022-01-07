@@ -13,13 +13,13 @@ exports.MealResolver = void 0;
 const type_graphql_1 = require("type-graphql");
 const Meal_1 = require("../entity/Meal");
 const MealTimeResponse_1 = require("../utils/responses/meal/MealTimeResponse");
-const meal_checker_1 = require("../utils/checker/meal.checker");
+const utils_1 = require("../utils");
 let MealResolver = class MealResolver {
     tping() {
         return "tpong !";
     }
     async mealTime() {
-        const targetResp = await (0, meal_checker_1.checkTargetMeal)();
+        const targetResp = await (0, utils_1.getTargetedMeal)();
         console.log("target -> ", targetResp.target.id);
         const m = await Meal_1.Meal.findOne({ where: { id: targetResp.target.id } });
         return {

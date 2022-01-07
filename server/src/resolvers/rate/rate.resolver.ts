@@ -7,7 +7,7 @@ import moment from "moment";
 import { MealResolver } from "../meal.resolver";
 import { Between } from "typeorm";
 import { RateType } from "../../utils/types/Rate";
-import { checkExpression } from "../../utils/checker/rate.checker";
+import { checkExpression } from "../../utils";
 
 @Resolver()
 export class RateMealResolver {

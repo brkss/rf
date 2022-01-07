@@ -14,7 +14,7 @@ interface ITargetMealResponse {
   is_current: boolean;
 }
 
-export const checkTargetMeal = async (): Promise<ITargetMealResponse> => {
+export const getTargetedMeal = async (): Promise<ITargetMealResponse> => {
   let now = new Date().toLocaleTimeString("en-EN", {
     timeZone: "Africa/Casablanca",
   });

@@ -23,10 +23,10 @@ const entity_1 = require("../../entity");
 const moment_1 = __importDefault(require("moment"));
 const meal_resolver_1 = require("../meal.resolver");
 const typeorm_1 = require("typeorm");
-const rate_checker_1 = require("../../utils/checker/rate.checker");
+const utils_1 = require("../../utils");
 let RateMealResolver = class RateMealResolver {
     async rate(expression, ctx) {
-        if (!expression || !(0, rate_checker_1.checkExpression)(expression)) {
+        if (!expression || !(0, utils_1.checkExpression)(expression)) {
             return {
                 status: false,
                 message: "Invalid data !",
